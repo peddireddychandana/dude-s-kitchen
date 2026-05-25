@@ -170,10 +170,10 @@ export default function ProfilePage({ onBack, logoUrl }) {
               <img
                 src={imgUrl(logoUrl)}
                 alt="DUDE'S KITCHEN"
-                className="w-full h-full object-cover rounded-2xl shadow-xl shadow-[#FFD700]/20"
+                className="w-full h-full object-cover rounded-full shadow-xl shadow-[#FFD700]/20"
               />
             ) : (
-              <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center">
                 <ChefHat className="w-10 h-10 text-black" />
               </div>
             )}
