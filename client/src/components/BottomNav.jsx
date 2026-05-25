@@ -18,8 +18,8 @@ export default function BottomNav({ activeTab, onTabChange }) {
         transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
         className="relative w-full max-w-lg mx-4 pointer-events-auto"
       >
-        <div className="bg-black/95 backdrop-blur-2xl rounded-t-[2rem] border-t border-white/5 shadow-[0_-8px_30px_rgba(0,0,0,0.5)]">
-          <div className="flex items-center justify-around px-2 pt-3 pb-6">
+        <div className="bg-black/95 backdrop-blur-2xl rounded-t-2xl border-t border-white/5 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+          <div className="flex items-center justify-around px-2 pt-2 pb-3">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -28,23 +28,23 @@ export default function BottomNav({ activeTab, onTabChange }) {
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className="relative flex flex-col items-center gap-1 py-1 px-3 transition-all duration-300"
+                  className="relative flex flex-col items-center gap-0.5 py-0.5 px-2 transition-all duration-300"
                 >
                   <div
-                    className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 ${
+                    className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 ${
                       isActive ? 'bg-[#FFD700]/10' : ''
                     }`}
                   >
                     <Icon
                       className={`transition-all duration-300 ${
                         isActive
-                          ? 'w-5 h-5 text-[#FFD700] drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]'
-                          : 'w-5 h-5 text-zinc-500'
+                          ? 'w-4 h-4 text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]'
+                          : 'w-4 h-4 text-zinc-500'
                       }`}
                     />
                   </div>
                   <span
-                    className={`text-[10px] font-medium transition-all duration-300 ${
+                    className={`text-[8px] font-medium transition-all duration-300 ${
                       isActive ? 'text-[#FFD700]' : 'text-zinc-500'
                     }`}
                   >
