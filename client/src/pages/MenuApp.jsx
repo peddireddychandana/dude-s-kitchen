@@ -9,7 +9,6 @@ import OffersPage from './OffersPage';
 import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
 import ProfilePage from './ProfilePage';
-import ReviewsPage from './ReviewsPage';
 import { getCategories, getFoods, getLogo } from '../utils/api';
 import { Search, X } from 'lucide-react';
 
@@ -180,7 +179,6 @@ export default function MenuApp() {
     if (activeTab === 'about') return <AboutPage onBack={goHome} logoUrl={logoUrl} />;
     if (activeTab === 'contact') return <ContactPage onBack={goHome} logoUrl={logoUrl} />;
     if (activeTab === 'profile') return <ProfilePage onBack={goHome} logoUrl={logoUrl} />;
-    if (activeTab === 'reviews') return <ReviewsPage onBack={goHome} logoUrl={logoUrl} />;
 
     return (
       <div className="flex h-full pb-10">

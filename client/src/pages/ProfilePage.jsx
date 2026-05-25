@@ -136,6 +136,8 @@ const InfoRow = ({ icon: Icon, label, value, delay = 0 }) => (
 const imgUrl = (path) =>
   path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : null;
 
+const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
+
 export default function ProfilePage({ onBack, logoUrl }) {
   return (
     <div className="relative min-h-screen bg-[#0A0A0A] pb-28 overflow-hidden">
@@ -251,6 +253,12 @@ export default function ProfilePage({ onBack, logoUrl }) {
                   icon={Instagram}
                   label="Follow on Instagram"
                   href="https://instagram.com/dudes_kitchen_2025"
+                  variant="secondary"
+                />
+                <ContactButton
+                  icon={Star}
+                  label="Google Reviews"
+                  href={readAllReviewsUrl}
                   variant="secondary"
                 />
               </div>
