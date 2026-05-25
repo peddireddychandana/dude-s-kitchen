@@ -2,9 +2,6 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 api.interceptors.request.use((config) => {
@@ -79,15 +76,11 @@ export function getLogo() {
 }
 
 export function uploadLogo(formData) {
-  return api.post('/logo', formData, {
-    headers: { 'Content-Type': null },
-  });
+  return api.post('/logo', formData);
 }
 
 export function uploadImage(formData) {
-  return api.post('/upload', formData, {
-    headers: { 'Content-Type': null },
-  });
+  return api.post('/upload', formData);
 }
 
 export default api;
