@@ -80,13 +80,13 @@ export function getLogo() {
 
 export function uploadLogo(formData) {
   return api.post('/logo', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: { 'Content-Type': null },
   });
 }
 
 export function uploadImage(formData) {
   return api.post('/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: { 'Content-Type': null },
   });
 }
 
