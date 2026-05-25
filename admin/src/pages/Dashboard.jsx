@@ -78,6 +78,8 @@ export default function Dashboard() {
       setTimeout(() => setLogoUploaded(false), 2000);
     } catch (err) {
       console.error('Logo upload failed:', err);
+      const msg = err.response?.data?.message || err.message || 'Upload failed';
+      alert('Logo upload failed: ' + msg);
     } finally {
       setUploadingLogo(false);
     }

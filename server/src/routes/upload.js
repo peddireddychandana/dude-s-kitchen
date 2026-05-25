@@ -24,6 +24,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     });
     res.json({ url: result.secure_url });
   } catch (err) {
+    console.error('Upload to Cloudinary failed:', err);
     res.status(500).json({ message: err.message });
   }
 });
