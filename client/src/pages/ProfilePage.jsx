@@ -133,7 +133,10 @@ const InfoRow = ({ icon: Icon, label, value, delay = 0 }) => (
   </motion.div>
 );
 
-export default function ProfilePage({ onBack }) {
+const imgUrl = (path) =>
+  path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : null;
+
+export default function ProfilePage({ onBack, logoUrl }) {
   return (
     <div className="relative min-h-screen bg-[#0A0A0A] pb-28 overflow-hidden">
       <Particles />
@@ -161,9 +164,19 @@ export default function ProfilePage({ onBack }) {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: 0.1 }}
-            className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center"
+            className="w-20 h-20 mx-auto mb-4"
           >
-            <ChefHat className="w-10 h-10 text-black" />
+            {logoUrl ? (
+              <img
+                src={imgUrl(logoUrl)}
+                alt="DUDE'S KITCHEN"
+                className="w-full h-full object-cover rounded-2xl shadow-xl shadow-[#FFD700]/20"
+              />
+            ) : (
+              <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center">
+                <ChefHat className="w-10 h-10 text-black" />
+              </div>
+            )}
           </motion.div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
             DUDE'S KITCHEN

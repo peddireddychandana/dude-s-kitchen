@@ -178,7 +178,7 @@ export default function MenuApp() {
     if (activeTab === 'offers') return <OffersPage onBack={goHome} logoUrl={logoUrl} />;
     if (activeTab === 'about') return <AboutPage onBack={goHome} logoUrl={logoUrl} />;
     if (activeTab === 'contact') return <ContactPage onBack={goHome} logoUrl={logoUrl} />;
-    if (activeTab === 'profile') return <ProfilePage onBack={goHome} />;
+    if (activeTab === 'profile') return <ProfilePage onBack={goHome} logoUrl={logoUrl} />;
 
     return (
       <div className="flex h-full pb-10">
