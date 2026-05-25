@@ -90,8 +90,11 @@ export default function MenuManagement() {
       formData.append('file', file);
       const res = await uploadImage(formData);
       setForm({ ...form, image: res.data.url });
+      console.log('Upload success:', res.data.url);
     } catch (err) {
       console.error('Upload failed:', err);
+      const msg = err.response?.data?.message || err.message || 'Upload failed';
+      alert('Upload failed: ' + msg);
     } finally {
       setUploading(false);
     }

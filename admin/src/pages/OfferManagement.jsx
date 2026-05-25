@@ -50,6 +50,8 @@ export default function OfferManagement() {
       setForm({ ...form, banner: res.data.url });
     } catch (err) {
       console.error('Upload failed:', err);
+      const msg = err.response?.data?.message || err.message || 'Upload failed';
+      alert('Upload failed: ' + msg);
     } finally {
       setUploading(false);
     }
