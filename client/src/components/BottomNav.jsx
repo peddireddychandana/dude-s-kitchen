@@ -21,7 +21,7 @@ export default function BottomNav({ activeTab, onTabChange }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-9 h-9 rounded-full bg-black/90 backdrop-blur-2xl border border-white/10 flex items-center justify-center hover:bg-zinc-900 transition-all shadow-lg"
+        className="fixed bottom-4 right-4 z-50 w-9 h-9 rounded-full bg-black/90 backdrop-blur-2xl border border-white/10 flex items-center justify-center hover:bg-zinc-900 transition-all shadow-lg"
       >
         <div className="flex flex-col items-center gap-[3px]">
           <span className="block w-4 h-[2px] rounded-full bg-zinc-400" />
