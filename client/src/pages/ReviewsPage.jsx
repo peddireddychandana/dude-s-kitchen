@@ -11,7 +11,7 @@ const reviews = [
   { name: 'Arjun D.', text: 'Their milkshakes are divine. Food delivery is always on time.', rating: 5 },
 ];
 
-const googleReviewUrl = 'https://www.google.com/search?q=dude+kitchen+proddatur+review';
+const googleReviewUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
 
 export default function ReviewsPage({ onBack, logoUrl }) {
   return (
