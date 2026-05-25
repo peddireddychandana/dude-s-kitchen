@@ -5,9 +5,10 @@ import MenuApp from './pages/MenuApp';
 import { CartProvider } from './context/CartContext';
 
 function App() {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(() => localStorage.getItem('showMenu') === 'true');
 
   const enterMenu = () => {
+    localStorage.setItem('showMenu', 'true');
     setShowMenu(true);
   };
 
