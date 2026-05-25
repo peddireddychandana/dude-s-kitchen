@@ -11,7 +11,8 @@ const reviews = [
   { name: 'Arjun D.', text: 'Their milkshakes are divine. Food delivery is always on time.', rating: 5 },
 ];
 
-const googleReviewUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
+const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
+const writeReviewUrl = 'https://www.google.com/maps/place/DUDE%27S+KITCHEN+Proddatur/@14.75,78.55,17z/data=!4m8!3m7!1s0x3bb3874e280761b5:0x55b436dd349de9ec!8m2!3d14.75!4d78.55!9m1!1b1';
 
 export default function ReviewsPage({ onBack, logoUrl }) {
   return (
@@ -67,7 +68,7 @@ export default function ReviewsPage({ onBack, logoUrl }) {
             <div className="flex-1 h-16 border-l border-white/10" />
             <div className="flex flex-col gap-2">
               <a
-                href={googleReviewUrl}
+                href={writeReviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#FFD700] to-[#E6B800] text-black text-xs font-bold shadow-lg shadow-[#FFD700]/20 hover:shadow-[#FFD700]/40 transition-all"
@@ -76,7 +77,7 @@ export default function ReviewsPage({ onBack, logoUrl }) {
                 Write a Review
               </a>
               <a
-                href={googleReviewUrl}
+                href={readAllReviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-xs font-medium border border-white/20 hover:bg-white/20 transition-all"
