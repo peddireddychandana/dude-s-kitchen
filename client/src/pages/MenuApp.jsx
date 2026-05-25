@@ -59,7 +59,7 @@ export default function MenuApp() {
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [activeCategory, setActiveCategory] = useState(() => localStorage.getItem('activeCategory') || '');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState(() => sessionStorage.getItem('activeTab') || 'home');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
@@ -164,6 +164,7 @@ export default function MenuApp() {
 
   const handleTabChange = useCallback((tab) => {
     setActiveTab(tab);
+    sessionStorage.setItem('activeTab', tab);
     if (tab === 'search') {
       setShowSearch(true);
     } else {
