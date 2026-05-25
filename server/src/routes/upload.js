@@ -1,7 +1,6 @@
 const express = require('express');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const { Readable } = require('stream');
 
 const router = express.Router();
 
@@ -18,16 +17,10 @@ router.post('/', upload.single('file'), async (req, res) => {
     return res.status(400).json({ message: 'No file uploaded' });
   }
   try {
-    const result = await new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'dudes-kitchen/uploads' },
-        (err, result) => {
-          if (err) reject(err);
-          else resolve(result);
-        }
-      );
-      const stream = Readable.from(req.file.buffer);
-      stream.pipe(uploadStream);
+    const b64 = Buffer.from(req.file.buffer).toString('base64');
+    const dataURI = 'data:' + req.file.mimetype + ';base64,' + b64;
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: 'dudes-kitchen/uploads',
     });
     res.json({ url: result.secure_url });
   } catch (err) {
