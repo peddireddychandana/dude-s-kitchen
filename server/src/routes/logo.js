@@ -41,7 +41,8 @@ router.post('/', upload.single('logo'), async (req, res) => {
     res.json({ url: result.secure_url });
   } catch (err) {
     console.error('Logo upload to Cloudinary failed:', err);
-    res.status(500).json({ message: err.message });
+    console.error('Full error:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
+    res.status(500).json({ error: true, details: String(err) });
   }
 });
 

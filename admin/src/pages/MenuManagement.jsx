@@ -93,7 +93,7 @@ export default function MenuManagement() {
       console.log('Upload success:', res.data.url);
     } catch (err) {
       console.error('Upload failed:', err);
-      const msg = err.response?.data?.message || err.message || 'Upload failed';
+      const msg = err.response?.data?.details || err.response?.data?.message || err.message || 'Upload failed';
       alert('Upload failed: ' + msg);
     } finally {
       setUploading(false);
