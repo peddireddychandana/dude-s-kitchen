@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
-const path = require('path');
 require('dotenv').config();
 
 const { router: authRoutes } = require('./routes/auth');
@@ -12,6 +11,8 @@ const offerRoutes = require('./routes/offers');
 const galleryRoutes = require('./routes/gallery');
 const uploadRoutes = require('./routes/upload');
 const logoRoutes = require('./routes/logo');
+
+const Admin = require('./models/Admin');
 
 const app = express();
 
@@ -24,10 +25,8 @@ app.use(cors({
   origin: [CLIENT_URL, ADMIN_URL],
   credentials: true,
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(morgan('dev'));
-
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/foods', foodRoutes);
@@ -42,8 +41,13 @@ app.get('/api/health', (req, res) => {
 });
 
 mongoose.connect(MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB');
+    const count = await Admin.countDocuments();
+    if (count === 0) {
+      await new Admin({ email: 'admin@dudeskitchen.com', password: 'admin123' }).save();
+      console.log('Created default admin: admin@dudeskitchen.com');
+    }
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
