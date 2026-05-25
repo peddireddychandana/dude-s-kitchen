@@ -21,7 +21,7 @@ const emptyForm = {
 };
 
 const imgUrl = (path) =>
-  path ? (path.startsWith('http') ? path : `http://localhost:5000${path}`) : '';
+  path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : '';
 
 export default function MenuManagement() {
   const [foods, setFoods] = useState([]);

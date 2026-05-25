@@ -104,7 +104,7 @@ export default function LandingPage({ onEnter }) {
         >
           {logoUrl ? (
             <img
-              src={logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`}
+              src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
               alt="DUDE'S KITCHEN"
               className="w-28 h-28 object-cover rounded-2xl mx-auto"
             />

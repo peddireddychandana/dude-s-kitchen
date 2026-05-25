@@ -194,7 +194,7 @@ export default function MenuApp() {
           <div className="sticky top-0 z-30 bg-[#0A0A0A] px-4 pt-3 pb-2 flex items-center gap-3 border-b border-white/[0.06]">
             {logoUrl ? (
               <img
-                src={logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`}
+                src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
                 alt="DUDE'S KITCHEN"
                 className="w-12 h-12 object-cover rounded-xl"
               />

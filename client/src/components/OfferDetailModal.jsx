@@ -12,7 +12,7 @@ export default function OfferDetailModal({ offer, onClose }) {
   const imgUrl = offer.banner
     ? offer.banner.startsWith('http')
       ? offer.banner
-      : `http://localhost:5000${offer.banner}`
+      : `https://dude-s-kitchen-server.onrender.com${offer.banner}`
     : null;
 
   return (

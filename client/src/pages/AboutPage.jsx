@@ -68,7 +68,7 @@ export default function AboutPage({ onBack, logoUrl }) {
           </div>
           <div className="flex items-center gap-3">
             {logoUrl ? (
-              <img src={logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" />
+              <img src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" />
             ) : (
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-black font-bold text-sm">
               DK

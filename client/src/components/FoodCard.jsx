@@ -13,7 +13,7 @@ export default function FoodCard({ food, gradient, emoji, onView }) {
   const imgUrl = food.image
     ? food.image.startsWith('http')
       ? food.image
-      : `http://localhost:5000${food.image}`
+      : `https://dude-s-kitchen-server.onrender.com${food.image}`
     : null;
 
   return (

@@ -29,7 +29,7 @@ export default function Sidebar() {
   }, []);
 
   const logoSrc = logoUrl
-    ? logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`
+    ? logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`
     : null;
 
   const sidebarContent = (

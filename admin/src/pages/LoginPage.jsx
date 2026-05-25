@@ -51,7 +51,7 @@ export default function LoginPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand-yellow/10 border border-brand-yellow/20 mb-4 overflow-hidden">
               {logoUrl ? (
                 <img
-                  src={logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`}
+                  src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
                   alt="DUDE'S KITCHEN"
                   className="w-full h-full object-cover"
                 />

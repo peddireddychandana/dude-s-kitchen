@@ -188,7 +188,7 @@ export default function Dashboard() {
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0 overflow-hidden">
                   {logoUrl ? (
                     <img
-                      src={logoUrl.startsWith('http') ? logoUrl : `http://localhost:5000${logoUrl}`}
+                      src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
                       alt="Logo"
                       className="w-full h-full object-cover"
                       onError={(e) => { e.target.style.display = 'none'; }}

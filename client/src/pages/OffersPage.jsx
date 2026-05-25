@@ -32,7 +32,7 @@ const floatingFoods = [
 ];
 
 const imgUrl = (path) =>
-  path ? (path.startsWith('http') ? path : `http://localhost:5000${path}`) : null;
+  path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : null;
 
 export default function OffersPage({ onBack, logoUrl }) {
   const [offers, setOffers] = useState([]);
