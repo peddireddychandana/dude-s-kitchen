@@ -10,7 +10,7 @@ export default function CategorySidebar({
 }) {
   return (
     <div className="relative flex-shrink-0 w-[90px] min-h-screen">
-      <div className="fixed left-0 top-0 w-[90px] h-full bg-[#FFD700] rounded-r-3xl overflow-hidden z-10 shadow-[4px_0_20px_rgba(0,0,0,0.15)]">
+      <div className="fixed left-0 top-0 w-[90px] h-full bg-[#FFD700] rounded-r-3xl z-10 shadow-[4px_0_20px_rgba(0,0,0,0.15)]">
         <div className="h-full overflow-y-auto no-scrollbar py-4">
           <div className="flex flex-col items-center gap-1 px-2">
             {categories.map((cat, index) => {
