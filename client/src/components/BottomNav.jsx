@@ -16,10 +16,10 @@ export default function BottomNav({ activeTab, onTabChange }) {
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-        className="relative w-full max-w-lg mx-4 pointer-events-auto"
+        className="relative max-w-[200px] mx-auto pointer-events-auto"
       >
-        <div className="bg-black/95 backdrop-blur-2xl rounded-t-2xl border-t border-white/5 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-          <div className="flex items-center justify-around px-2 pt-2 pb-3">
+        <div className="bg-black/90 backdrop-blur-2xl rounded-full border border-white/5 shadow-[0_-2px_10px_rgba(0,0,0,0.5)]">
+          <div className="flex items-center justify-around px-1.5 py-1.5">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -28,23 +28,23 @@ export default function BottomNav({ activeTab, onTabChange }) {
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className="relative flex flex-col items-center gap-0.5 py-0.5 px-2 transition-all duration-300"
+                  className="relative flex flex-col items-center gap-0.5 py-0.5 px-1.5 transition-all duration-300"
                 >
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 ${
+                    className={`flex items-center justify-center w-6 h-6 rounded-md transition-all duration-300 ${
                       isActive ? 'bg-[#FFD700]/10' : ''
                     }`}
                   >
                     <Icon
                       className={`transition-all duration-300 ${
                         isActive
-                          ? 'w-4 h-4 text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]'
-                          : 'w-4 h-4 text-zinc-500'
+                          ? 'w-3 h-3 text-[#FFD700] drop-shadow-[0_0_4px_rgba(255,215,0,0.5)]'
+                          : 'w-3 h-3 text-zinc-500'
                       }`}
                     />
                   </div>
                   <span
-                    className={`text-[8px] font-medium transition-all duration-300 ${
+                    className={`text-[7px] font-medium leading-none transition-all duration-300 ${
                       isActive ? 'text-[#FFD700]' : 'text-zinc-500'
                     }`}
                   >

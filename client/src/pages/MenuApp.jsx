@@ -181,7 +181,7 @@ export default function MenuApp() {
     if (activeTab === 'profile') return <ProfilePage onBack={goHome} />;
 
     return (
-      <div className="flex h-full" style={{ paddingBottom: '60px' }}>
+      <div className="flex h-full" style={{ paddingBottom: '50px' }}>
         <CategorySidebar
           categories={categories}
           activeCategory={activeCategory}
