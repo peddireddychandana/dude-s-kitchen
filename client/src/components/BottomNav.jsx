@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Search, Tag, User, X } from 'lucide-react';
+import { Home, Tag, User, Star, X } from 'lucide-react';
 
 const navItems = [
   { id: 'home', icon: Home, label: 'Home' },
-  { id: 'search', icon: Search, label: 'Search' },
+  { id: 'reviews', icon: Star, label: 'Reviews' },
   { id: 'offers', icon: Tag, label: 'Offers' },
   { id: 'profile', icon: User, label: 'Profile' },
 ];
