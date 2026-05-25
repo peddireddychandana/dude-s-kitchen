@@ -18,11 +18,21 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
-const ADMIN_URL = process.env.ADMIN_URL || 'http://localhost:3001';
 
 app.use(cors({
-  origin: [CLIENT_URL, ADMIN_URL],
+  origin: function (origin, callback) {
+    const allowed = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      process.env.CLIENT_URL,
+      process.env.ADMIN_URL,
+    ].filter(Boolean);
+    if (!origin || allowed.includes(origin) || origin.endsWith('.onrender.com')) {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
