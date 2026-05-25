@@ -43,62 +43,45 @@ export default function BottomNav({ activeTab, onTabChange }) {
             />
 
             <motion.div
-              initial={{ y: '100%', opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: '100%', opacity: 0 }}
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-50 flex justify-center"
+              className="fixed top-0 right-0 bottom-0 z-50"
             >
-              <div className="w-full max-w-lg mx-4 mb-4">
-                <div className="bg-zinc-900/95 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
-                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Navigate</span>
-                    <button
-                      onClick={() => setOpen(false)}
-                      className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors"
-                    >
-                      <X className="w-3.5 h-3.5 text-zinc-400" />
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-4 gap-1 p-2">
-                    {navItems.map((item) => {
-                      const Icon = item.icon;
-                      const isActive = activeTab === item.id;
+              <div className="h-full w-56 bg-zinc-900/95 backdrop-blur-2xl border-l border-white/10 shadow-[-4px_0_20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
+                <div className="flex justify-end px-3 pt-3">
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5 text-zinc-400" />
+                  </button>
+                </div>
+                <div className="flex-1 flex flex-col gap-1 p-3">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeTab === item.id;
 
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => handleSelect(item.id)}
-                          className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all duration-300 ${
-                            isActive
-                              ? 'bg-[#FFD700]/10'
-                              : 'hover:bg-zinc-800/50'
-                          }`}
-                        >
-                          <div
-                            className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 ${
-                              isActive ? 'bg-[#FFD700]/10' : ''
-                            }`}
-                          >
-                            <Icon
-                              className={`transition-all duration-300 ${
-                                isActive
-                                  ? 'w-4 h-4 text-[#FFD700]'
-                                  : 'w-4 h-4 text-zinc-400'
-                              }`}
-                            />
-                          </div>
-                          <span
-                            className={`text-[9px] font-medium transition-all duration-300 ${
-                              isActive ? 'text-[#FFD700]' : 'text-zinc-500'
-                            }`}
-                          >
-                            {item.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => handleSelect(item.id)}
+                        className={`flex items-center gap-3 py-2.5 px-3 rounded-xl transition-all duration-300 ${
+                          isActive
+                            ? 'bg-[#FFD700]/10 text-[#FFD700]'
+                            : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
+                        }`}
+                      >
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 ${
+                          isActive ? 'bg-[#FFD700]/10' : ''
+                        }`}>
+                          <Icon className={`w-4 h-4 ${isActive ? 'text-[#FFD700]' : 'text-zinc-400'}`} />
+                        </div>
+                        <span className="text-sm font-medium">{item.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
