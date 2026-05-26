@@ -15,6 +15,18 @@ const offerTypes = [
   { value: 'yearly', label: '365 Day Offer' },
 ];
 
+const typeLabels = {
+  default: 'Special Offer',
+  monday: 'Monday Offer',
+  tuesday: 'Tuesday Offer',
+  wednesday: 'Wednesday Offer',
+  thursday: 'Thursday Offer',
+  friday: 'Friday Offer',
+  saturday: 'Saturday Offer',
+  sunday: 'Sunday Special',
+  yearly: '365 Day Offer',
+};
+
 const emptyForm = {
   title: '',
   description: '',
@@ -22,7 +34,6 @@ const emptyForm = {
   discount: '',
   type: 'default',
   banner: '',
-  expiryDate: '',
 };
 
 const imgUrl = (path) =>
@@ -85,7 +96,6 @@ export default function OfferManagement() {
       discount: offer.discount || '',
       type: offer.type || 'default',
       banner: offer.banner || '',
-      expiryDate: offer.expiryDate ? offer.expiryDate.split('T')[0] : '',
     });
     setShowModal(true);
   };
@@ -153,14 +163,14 @@ export default function OfferManagement() {
           <p className="text-zinc-500">No offers yet. Create your first promotion!</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {offers.map((offer) => (
             <div
               key={offer._id}
-              className="group relative bg-zinc-900/80 border border-zinc-800 rounded-xl overflow-hidden hover:border-brand-yellow/30 transition-all duration-200"
+              className="group relative bg-zinc-900/80 border border-zinc-800 rounded-xl overflow-hidden hover:border-brand-yellow/30 transition-all duration-200 flex flex-col"
             >
-              {offer.banner && (
-                <div className="relative h-32 overflow-hidden">
+              {offer.banner ? (
+                <div className="relative h-36 overflow-hidden flex-shrink-0">
                   <img
                     src={imgUrl(offer.banner)}
                     alt=""
@@ -168,25 +178,17 @@ export default function OfferManagement() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
                 </div>
+              ) : (
+                <div className="h-12 flex-shrink-0" />
               )}
-              <div className="p-4">
-                <div className="flex items-start justify-between mb-2">
+              <div className="p-4 flex flex-col flex-1">
+                <div className="flex items-start justify-between gap-2 mb-2">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-bold text-white truncate pr-2">
+                    <h3 className="text-sm font-bold text-white leading-tight">
                       {offer.title}
                     </h3>
-                    {offer.discount && (
-                      <span className="inline-block mt-1 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                        {offer.discount}% OFF
-                      </span>
-                    )}
-                    {offer.price > 0 && (
-                      <span className="inline-block mt-1 ml-1 text-xs font-bold text-brand-yellow bg-brand-yellow/10 px-2 py-0.5 rounded-full">
-                        ₹{offer.price}
-                      </span>
-                    )}
                   </div>
-                  <div className="flex items-center gap-1 transition-all flex-shrink-0">
+                  <div className="flex items-center gap-1 flex-shrink-0">
                     <button
                       onClick={() => openEdit(offer)}
                       className="p-1.5 text-zinc-500 hover:text-brand-yellow hover:bg-brand-yellow/10 rounded-lg"
@@ -202,15 +204,25 @@ export default function OfferManagement() {
                   </div>
                 </div>
                 {offer.description && (
-                  <p className="text-zinc-400 text-xs mb-2 line-clamp-2">{offer.description}</p>
+                  <p className="text-zinc-400 text-xs mb-3 line-clamp-2 leading-relaxed">{offer.description}</p>
                 )}
-                {offer.expiryDate && (
-                  <p className="text-[10px] text-zinc-600">
-                    Expires: {new Date(offer.expiryDate).toLocaleDateString('en-IN', {
-                      day: 'numeric', month: 'short', year: 'numeric'
-                    })}
-                  </p>
-                )}
+                <div className="flex flex-wrap items-center gap-2 mt-auto">
+                  {offer.type && offer.type !== 'default' && (
+                    <span className="text-[10px] font-bold text-black bg-gradient-to-r from-[#FFD700] to-[#E6B800] px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      {typeLabels[offer.type] || offer.type}
+                    </span>
+                  )}
+                  {offer.discount > 0 && (
+                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                      {offer.discount}% OFF
+                    </span>
+                  )}
+                  {offer.price > 0 && (
+                    <span className="text-[10px] font-bold text-brand-yellow bg-brand-yellow/10 px-2 py-0.5 rounded-full">
+                      ₹{offer.price}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -276,15 +288,6 @@ export default function OfferManagement() {
                   <option key={t.value} value={t.value}>{t.label}</option>
                 ))}
               </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1.5">Expiry Date</label>
-              <input
-                type="date"
-                value={form.expiryDate}
-                onChange={(e) => setForm({ ...form, expiryDate: e.target.value })}
-                className="input-field"
-              />
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5">Banner Image</label>
