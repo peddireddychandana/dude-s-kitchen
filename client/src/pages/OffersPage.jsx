@@ -95,7 +95,7 @@ export default function OffersPage({ onBack, logoUrl }) {
         </motion.button>
         <div className="flex-1" />
         {logoUrl ? (
-          <img src={imgUrl(logoUrl)} alt="" className="w-10 h-10 object-cover rounded-xl" loading="lazy" />
+          <img src={imgUrl(logoUrl)} alt="" className="w-10 h-10 object-cover rounded-xl" />
         ) : (
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-xs font-extrabold text-black">DK</div>
         )}
@@ -192,7 +192,7 @@ export default function OffersPage({ onBack, logoUrl }) {
                             src={banner}
                             alt={offer.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            loading="lazy"
+                            
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
                         </>

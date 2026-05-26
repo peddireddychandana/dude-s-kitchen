@@ -348,7 +348,7 @@ export default function ProfilePage({ onBack, logoUrl }) {
                   className="absolute inset-0 w-full h-full"
                   style={{ filter: 'invert(0.9) hue-rotate(180deg)' }}
                   allowFullScreen=""
-                  loading="lazy"
+                  
                   referrerPolicy="no-referrer-when-downgrade"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />

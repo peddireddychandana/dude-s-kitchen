@@ -62,7 +62,7 @@ export default function FoodDetailModal({ food, gradient, emoji, onClose }) {
                 src={imgSrc}
                 alt={food.name}
                 className="w-full h-full object-cover"
-                loading="lazy"
+                
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
             </>

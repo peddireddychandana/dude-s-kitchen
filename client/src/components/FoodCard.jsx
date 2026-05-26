@@ -39,7 +39,7 @@ export default function FoodCard({ food, gradient, emoji, onView }) {
                 </span>
               </div>
             )}
-            <img src={imgSrc} alt={food.name} className="w-full h-full object-cover" loading="lazy" />
+            <img src={imgSrc} alt={food.name} className="w-full h-full object-cover"  />
             {food.veg !== undefined && (
               <div className="absolute top-1 left-1">
                 {food.veg ? (
