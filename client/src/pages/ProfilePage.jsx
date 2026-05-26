@@ -12,6 +12,7 @@ import {
   ChefHat,
   Sparkles,
   ArrowLeft,
+  PenSquare,
 } from 'lucide-react';
 
 const Particles = () => {
@@ -133,8 +134,16 @@ const InfoRow = ({ icon: Icon, label, value, delay = 0 }) => (
   </motion.div>
 );
 
-const imgUrl = (path) =>
-  path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : null;
+const imgUrl = (path) => {
+  if (!path) return null;
+  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
+  if (url.includes('res.cloudinary.com')) {
+    return url.replace('/upload/', '/upload/q_auto,f_auto/');
+  }
+  return url;
+};
+
+const writeReviewUrl = 'https://www.google.com/search?newwindow=1&sca_esv=68cd59949303f16d&sxsrf=ANbL-n5p0nXLR1zABZWZuyxuavgk4PLsSg:1779770699943&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwik8ufCktaUAxV5T2wGHc_GFaMQ0bkNegQIOBAF&biw=1536&h=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
 
 const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
 
@@ -173,6 +182,7 @@ export default function ProfilePage({ onBack, logoUrl }) {
                 src={imgUrl(logoUrl)}
                 alt="DUDE'S KITCHEN"
                 className="w-full h-full object-cover rounded-full shadow-xl shadow-[#FFD700]/20"
+                fetchpriority="high"
               />
             ) : (
               <div className="w-full h-full rounded-full bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center">
@@ -195,6 +205,22 @@ export default function ProfilePage({ onBack, logoUrl }) {
             Food Court
           </span>
         </motion.div>
+
+        <motion.a
+          href={writeReviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="max-w-lg mx-auto mb-4 flex items-center justify-center gap-3 px-5 py-4 rounded-2xl bg-gradient-to-r from-[#FFD700] to-[#E6B800] text-black font-bold shadow-lg shadow-[#FFD700]/20 hover:shadow-[#FFD700]/40 transition-all duration-300"
+        >
+          <PenSquare className="w-5 h-5" />
+          <span>Write a Review</span>
+          <Star className="w-4 h-4 fill-black" />
+        </motion.a>
 
         <div className="space-y-4 max-w-lg mx-auto">
           <GlowCard delay={0.2}>

@@ -107,6 +107,7 @@ export default function LandingPage({ onEnter }) {
               src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
               alt="DUDE'S KITCHEN"
               className="w-28 h-28 object-cover rounded-2xl mx-auto"
+              fetchpriority="high"
             />
           ) : (
             <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-lg font-extrabold text-black shadow-lg shadow-[#FFD700]/20 mx-auto">

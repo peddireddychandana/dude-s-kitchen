@@ -197,6 +197,7 @@ export default function MenuApp() {
                 src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
                 alt="DUDE'S KITCHEN"
                 className="w-12 h-12 object-cover rounded-xl"
+                fetchpriority="high"
               />
             ) : (
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-xs font-extrabold text-black">

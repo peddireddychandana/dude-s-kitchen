@@ -8,12 +8,17 @@ const offerIcons = {
   limited: <Clock className="w-6 h-6 text-[#FFD700]" />,
 };
 
+const imgUrl = (path) => {
+  if (!path) return null;
+  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
+  if (url.includes('res.cloudinary.com')) {
+    return url.replace('/upload/', '/upload/q_auto,f_auto/');
+  }
+  return url;
+};
+
 export default function OfferDetailModal({ offer, onClose }) {
-  const imgUrl = offer.banner
-    ? offer.banner.startsWith('http')
-      ? offer.banner
-      : `https://dude-s-kitchen-server.onrender.com${offer.banner}`
-    : null;
+  const imgSrc = imgUrl(offer.banner);
 
   return (
     <motion.div
@@ -41,12 +46,13 @@ export default function OfferDetailModal({ offer, onClose }) {
         </button>
 
         <div className="relative h-64 md:h-72 bg-zinc-800 overflow-hidden">
-          {imgUrl ? (
+          {imgSrc ? (
             <>
               <img
-                src={imgUrl}
+                src={imgSrc}
                 alt={offer.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
             </>

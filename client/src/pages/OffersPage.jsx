@@ -31,8 +31,14 @@ const floatingFoods = [
   { emoji: '🍗', className: 'top-[40%] right-[3%] text-4xl md:text-5xl opacity-10 -rotate-[15deg]' },
 ];
 
-const imgUrl = (path) =>
-  path ? (path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`) : null;
+const imgUrl = (path) => {
+  if (!path) return null;
+  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
+  if (url.includes('res.cloudinary.com')) {
+    return url.replace('/upload/', '/upload/q_auto,f_auto/');
+  }
+  return url;
+};
 
 export default function OffersPage({ onBack, logoUrl }) {
   const [offers, setOffers] = useState([]);
@@ -81,7 +87,7 @@ export default function OffersPage({ onBack, logoUrl }) {
         </motion.button>
         <div className="flex-1" />
         {logoUrl ? (
-          <img src={imgUrl(logoUrl)} alt="" className="w-10 h-10 object-cover rounded-xl" />
+          <img src={imgUrl(logoUrl)} alt="" className="w-10 h-10 object-cover rounded-xl" loading="lazy" />
         ) : (
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-xs font-extrabold text-black">DK</div>
         )}
@@ -178,6 +184,7 @@ export default function OffersPage({ onBack, logoUrl }) {
                             src={banner}
                             alt={offer.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
                         </>
