@@ -7,11 +7,19 @@ import {
 } from 'lucide-react';
 
 const badgeConfig = {
-  student: { label: 'Student Deal', icon: '🎓', gradient: 'from-blue-600/20 to-purple-600/20', border: 'border-blue-500/30', text: 'text-blue-400', bg: 'bg-blue-500/20' },
-  birthday: { label: 'Birthday Special', icon: '🎂', gradient: 'from-rose-600/20 to-amber-600/20', border: 'border-rose-500/30', text: 'text-rose-400', bg: 'bg-rose-500/20' },
-  combo: { label: 'Hot Deal', icon: '🔥', gradient: 'from-orange-600/20 to-red-600/20', border: 'border-orange-500/30', text: 'text-orange-400', bg: 'bg-orange-500/20' },
-  limited: { label: 'Limited Time', icon: '⏳', gradient: 'from-emerald-600/20 to-teal-600/20', border: 'border-emerald-500/30', text: 'text-emerald-400', bg: 'bg-emerald-500/20' },
-  default: { label: 'Special Offer', icon: '✨', gradient: 'from-[#FFD700]/20 to-amber-600/20', border: 'border-[#FFD700]/30', text: 'text-[#FFD700]', bg: 'bg-[#FFD700]/20' },
+  student: { label: 'Student Deal', icon: '🎓', gradient: 'from-blue-600/20 to-purple-600/20', border: 'border-blue-500/30', text: 'text-blue-400', bg: 'bg-blue-500/20', day: '' },
+  birthday: { label: 'Birthday Special', icon: '🎂', gradient: 'from-rose-600/20 to-amber-600/20', border: 'border-rose-500/30', text: 'text-rose-400', bg: 'bg-rose-500/20', day: '' },
+  combo: { label: 'Hot Deal', icon: '🔥', gradient: 'from-orange-600/20 to-red-600/20', border: 'border-orange-500/30', text: 'text-orange-400', bg: 'bg-orange-500/20', day: '' },
+  limited: { label: 'Limited Time', icon: '⏳', gradient: 'from-emerald-600/20 to-teal-600/20', border: 'border-emerald-500/30', text: 'text-emerald-400', bg: 'bg-emerald-500/20', day: '' },
+  monday: { label: 'Monday Offer', icon: '📅', gradient: 'from-blue-600/20 to-cyan-600/20', border: 'border-blue-500/30', text: 'text-blue-400', bg: 'bg-blue-500/20', day: 'Monday' },
+  tuesday: { label: 'Tuesday Offer', icon: '📅', gradient: 'from-rose-600/20 to-pink-600/20', border: 'border-rose-500/30', text: 'text-rose-400', bg: 'bg-rose-500/20', day: 'Tuesday' },
+  wednesday: { label: 'Wednesday Offer', icon: '📅', gradient: 'from-emerald-600/20 to-teal-600/20', border: 'border-emerald-500/30', text: 'text-emerald-400', bg: 'bg-emerald-500/20', day: 'Wednesday' },
+  thursday: { label: 'Thursday Offer', icon: '📅', gradient: 'from-purple-600/20 to-fuchsia-600/20', border: 'border-purple-500/30', text: 'text-purple-400', bg: 'bg-purple-500/20', day: 'Thursday' },
+  friday: { label: 'Friday Offer', icon: '📅', gradient: 'from-orange-600/20 to-red-600/20', border: 'border-orange-500/30', text: 'text-orange-400', bg: 'bg-orange-500/20', day: 'Friday' },
+  saturday: { label: 'Saturday Offer', icon: '📅', gradient: 'from-indigo-600/20 to-violet-600/20', border: 'border-indigo-500/30', text: 'text-indigo-400', bg: 'bg-indigo-500/20', day: 'Saturday' },
+  sunday: { label: 'Sunday Special', icon: '☀️', gradient: 'from-amber-600/20 to-yellow-600/20', border: 'border-amber-500/30', text: 'text-amber-400', bg: 'bg-amber-500/20', day: 'Sunday' },
+  yearly: { label: '365 Day Offer', icon: '🏆', gradient: 'from-[#FFD700]/20 to-red-600/20', border: 'border-[#FFD700]/30', text: 'text-[#FFD700]', bg: 'bg-[#FFD700]/20', day: '365 Days' },
+  default: { label: 'Special Offer', icon: '✨', gradient: 'from-[#FFD700]/20 to-amber-600/20', border: 'border-[#FFD700]/30', text: 'text-[#FFD700]', bg: 'bg-[#FFD700]/20', day: '' },
 };
 
 const accentColors = [
@@ -200,6 +208,14 @@ export default function OffersPage({ onBack, logoUrl }) {
                           <span className={`text-[8px] font-bold ${badge.text} uppercase tracking-wider`}>{badge.label}</span>
                         </div>
                       </div>
+
+                      {badge.day && (
+                        <div className="absolute top-2 left-2 z-10">
+                          <div className="px-2.5 py-1 rounded-lg bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-lg shadow-[#FFD700]/30">
+                            <span className="text-[9px] font-extrabold text-black uppercase tracking-wider">{badge.day}</span>
+                          </div>
+                        </div>
+                      )}
 
                       {offer.discount && (
                         <div className="absolute -bottom-3 right-3 z-10">

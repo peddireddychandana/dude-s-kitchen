@@ -3,11 +3,24 @@ import { getOffers, createOffer, updateOffer, deleteOffer, uploadImage } from '.
 import Modal from '../components/Modal';
 import { Plus, Pencil, Trash2, Loader2, Percent, Upload } from 'lucide-react';
 
+const offerTypes = [
+  { value: 'default', label: 'Special Offer' },
+  { value: 'monday', label: 'Monday Offer' },
+  { value: 'tuesday', label: 'Tuesday Offer' },
+  { value: 'wednesday', label: 'Wednesday Offer' },
+  { value: 'thursday', label: 'Thursday Offer' },
+  { value: 'friday', label: 'Friday Offer' },
+  { value: 'saturday', label: 'Saturday Offer' },
+  { value: 'sunday', label: 'Sunday Special' },
+  { value: 'yearly', label: '365 Day Offer' },
+];
+
 const emptyForm = {
   title: '',
   description: '',
   price: '',
   discount: '',
+  type: 'default',
   banner: '',
   expiryDate: '',
 };
@@ -70,6 +83,7 @@ export default function OfferManagement() {
       description: offer.description || '',
       price: offer.price || '',
       discount: offer.discount || '',
+      type: offer.type || 'default',
       banner: offer.banner || '',
       expiryDate: offer.expiryDate ? offer.expiryDate.split('T')[0] : '',
     });
@@ -250,6 +264,18 @@ export default function OfferManagement() {
                   max={100}
                 />
               </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-400 mb-1.5">Offer Type</label>
+              <select
+                value={form.type}
+                onChange={(e) => setForm({ ...form, type: e.target.value })}
+                className="input-field"
+              >
+                {offerTypes.map((t) => (
+                  <option key={t.value} value={t.value}>{t.label}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5">Expiry Date</label>
