@@ -397,30 +397,33 @@ export default function MenuManagement() {
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5">Food Image</label>
               <div className="flex items-center gap-3">
-                <label className="flex-1 flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-zinc-600 cursor-pointer hover:border-brand-yellow/50 transition-colors">
+                <div
+                  onClick={() => document.getElementById('foodImageInput')?.click()}
+                  className="flex-1 flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-zinc-600 cursor-pointer hover:border-brand-yellow/50 transition-all active:scale-[0.98] min-h-[48px] touch-manipulation"
+                >
                   <Upload className="w-5 h-5 text-zinc-400" />
-                  <span className="text-sm text-zinc-400">
+                  <span className="text-sm text-zinc-400 pointer-events-none">
                     {uploading ? 'Uploading...' : form.image ? 'Change Image' : 'Upload Image'}
                   </span>
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/gif,image/webp"
-                    capture="environment"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    disabled={uploading}
-                  />
-                </label>
+                </div>
                 {form.image && (
                   <button
                     type="button"
                     onClick={() => setForm({ ...form, image: '' })}
-                    className="text-xs text-red-400 hover:text-red-300"
+                    className="text-xs text-red-400 hover:text-red-300 min-h-[48px] px-2"
                   >
                     Remove
                   </button>
                 )}
               </div>
+              <input
+                id="foodImageInput"
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                onChange={handleImageUpload}
+                className="hidden"
+                disabled={uploading}
+              />
               {form.image && (
                 <div className="mt-2 rounded-lg overflow-hidden w-20 h-20 border border-zinc-700">
                   <img src={imgUrl(form.image)} alt="" className="w-full h-full object-cover" />

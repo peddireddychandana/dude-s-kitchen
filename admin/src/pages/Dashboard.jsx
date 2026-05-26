@@ -211,7 +211,11 @@ export default function Dashboard() {
                   Recommended: 200x200px, transparent background
                 </p>
               </div>
-              <label className="btn-primary text-sm cursor-pointer flex items-center gap-2 px-4 py-2 whitespace-nowrap">
+              <button
+                type="button"
+                onClick={() => document.getElementById('logoFileInput')?.click()}
+                className="btn-primary text-sm cursor-pointer flex items-center gap-2 px-4 py-2 whitespace-nowrap"
+              >
                 {uploadingLogo ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : logoUploaded ? (
@@ -220,8 +224,14 @@ export default function Dashboard() {
                   <Upload className="w-4 h-4" />
                 )}
                 {uploadingLogo ? 'Uploading...' : logoUploaded ? 'Uploaded' : 'Upload'}
-                <input type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" onChange={handleLogoUpload} className="hidden" />
-              </label>
+              </button>
+              <input
+                id="logoFileInput"
+                type="file"
+                accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                onChange={handleLogoUpload}
+                className="hidden"
+              />
             </div>
           </div>
         </>

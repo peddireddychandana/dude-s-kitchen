@@ -291,13 +291,23 @@ export default function OfferManagement() {
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5">Banner Image</label>
-              <label className="flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-zinc-600 cursor-pointer hover:border-brand-yellow/50 transition-colors">
+              <div
+                onClick={() => document.getElementById('bannerImageInput')?.click()}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-zinc-600 cursor-pointer hover:border-brand-yellow/50 transition-all active:scale-[0.98] min-h-[48px] touch-manipulation"
+              >
                 <Upload className="w-5 h-5 text-zinc-400" />
-                <span className="text-sm text-zinc-400">
+                <span className="text-sm text-zinc-400 pointer-events-none">
                   {uploading ? 'Uploading...' : form.banner ? 'Change Banner' : 'Upload Banner'}
                 </span>
-                <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" capture="environment" onChange={handleBannerUpload} className="hidden" disabled={uploading} />
-              </label>
+              </div>
+              <input
+                id="bannerImageInput"
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                onChange={handleBannerUpload}
+                className="hidden"
+                disabled={uploading}
+              />
               {form.banner && (
                 <div className="mt-2 rounded-lg overflow-hidden h-24 border border-zinc-700">
                   <img src={imgUrl(form.banner)} alt="" className="w-full h-full object-cover" />
