@@ -211,7 +211,7 @@ export default function OffersPage({ onBack, logoUrl }) {
 
                       {badge.day && (
                         <div className="absolute top-2 left-2 z-10">
-                          <div className="px-2.5 py-1 rounded-lg bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-lg shadow-[#FFD700]/30">
+                          <div className="px-2.5 py-1 rounded-lg bg-white shadow-lg shadow-white/30">
                             <span className="text-[9px] font-extrabold text-black uppercase tracking-wider">{badge.day}</span>
                           </div>
                         </div>
