@@ -33,6 +33,7 @@ router.post('/', authenticate, async (req, res) => {
   try {
     const food = new Food(req.body);
     await food.save();
+    req.io.emit('foods:update');
     res.status(201).json(food);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -45,6 +46,7 @@ router.put('/:id', authenticate, async (req, res) => {
     if (!food) {
       return res.status(404).json({ message: 'Food not found' });
     }
+    req.io.emit('foods:update');
     res.json(food);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -57,6 +59,7 @@ router.delete('/:id', authenticate, async (req, res) => {
     if (!food) {
       return res.status(404).json({ message: 'Food not found' });
     }
+    req.io.emit('foods:update');
     res.json({ message: 'Deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -10,6 +10,7 @@ import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
 import ProfilePage from './ProfilePage';
 import { getCategories, getFoods, LOGO_URL } from '../utils/api';
+import socket from '../utils/socket';
 import { Search, X } from 'lucide-react';
 
 const categoryGradients = {
@@ -108,15 +109,13 @@ export default function MenuApp() {
 
   useEffect(() => {
     loadData();
-  }, [loadData]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        loadData();
-      }
-    }, 10000);
-    return () => clearInterval(interval);
+    socket.connect();
+    socket.on('foods:update', loadData);
+    socket.on('categories:update', loadData);
+    return () => {
+      socket.off('foods:update', loadData);
+      socket.off('categories:update', loadData);
+    };
   }, [loadData]);
 
   useEffect(() => {

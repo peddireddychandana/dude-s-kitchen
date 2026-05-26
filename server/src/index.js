@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
+const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 const { router: authRoutes } = require('./routes/auth');
@@ -16,6 +18,31 @@ const logoRoutes = require('./routes/logo');
 const Admin = require('./models/Admin');
 
 const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      const allowed = [
+        'http://localhost:3000',
+        'http://localhost:3001',
+        process.env.CLIENT_URL,
+        process.env.ADMIN_URL,
+      ].filter(Boolean);
+      if (!origin || allowed.includes(origin) || origin.endsWith('.onrender.com')) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
+    credentials: true,
+  },
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -61,7 +88,7 @@ mongoose.connect(MONGO_URI)
       await new Admin({ email: 'admin@dudeskitchen.com', password: 'admin123' }).save();
       console.log('Created default admin: admin@dudeskitchen.com');
     }
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })

@@ -17,6 +17,7 @@ router.post('/', authenticate, async (req, res) => {
   try {
     const offer = new Offer(req.body);
     await offer.save();
+    req.io.emit('offers:update');
     res.status(201).json(offer);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -29,6 +30,7 @@ router.put('/:id', authenticate, async (req, res) => {
     if (!offer) {
       return res.status(404).json({ message: 'Offer not found' });
     }
+    req.io.emit('offers:update');
     res.json(offer);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -41,6 +43,7 @@ router.delete('/:id', authenticate, async (req, res) => {
     if (!offer) {
       return res.status(404).json({ message: 'Offer not found' });
     }
+    req.io.emit('offers:update');
     res.json({ message: 'Deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

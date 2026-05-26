@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getOffers, LOGO_URL } from '../utils/api';
+import socket from '../utils/socket';
 import OfferDetailModal from '../components/OfferDetailModal';
 import {
   ArrowLeft, Percent, Eye,
@@ -66,12 +67,12 @@ export default function OffersPage({ onBack }) {
       }
     }
     load();
-    const interval = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        getOffers().then((data) => setOffers(data || [])).catch(() => {});
-      }
-    }, 10000);
-    return () => clearInterval(interval);
+    socket.connect();
+    const handler = () => getOffers().then((data) => setOffers(data || [])).catch(() => {});
+    socket.on('offers:update', handler);
+    return () => {
+      socket.off('offers:update', handler);
+    };
   }, []);
 
   if (loading) {

@@ -17,6 +17,7 @@ router.post('/', authenticate, async (req, res) => {
   try {
     const category = new Category(req.body);
     await category.save();
+    req.io.emit('categories:update');
     res.status(201).json(category);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -29,6 +30,7 @@ router.delete('/:id', authenticate, async (req, res) => {
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
+    req.io.emit('categories:update');
     res.json({ message: 'Deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
