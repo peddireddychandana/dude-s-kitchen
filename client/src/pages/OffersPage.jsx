@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getOffers } from '../utils/api';
+import { getOffers, LOGO_URL } from '../utils/api';
 import OfferDetailModal from '../components/OfferDetailModal';
 import {
   ArrowLeft, Percent, Eye,
@@ -48,7 +48,7 @@ const imgUrl = (path) => {
   return url;
 };
 
-export default function OffersPage({ onBack, logoUrl }) {
+export default function OffersPage({ onBack }) {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -94,11 +94,7 @@ export default function OffersPage({ onBack, logoUrl }) {
           <ArrowLeft className="w-4 h-4 text-zinc-400" />
         </motion.button>
         <div className="flex-1" />
-        {logoUrl ? (
-          <img src={imgUrl(logoUrl)} alt="" className="w-10 h-10 object-cover rounded-xl" />
-        ) : (
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-xs font-extrabold text-black">DK</div>
-        )}
+        <img src={LOGO_URL} alt="" className="w-10 h-10 object-cover rounded-xl" />
         <span className="text-base font-extrabold tracking-tight">
           <span className="text-[#FFD700]">DUDE'S</span>
           <span className="text-white"> KITCHEN</span>

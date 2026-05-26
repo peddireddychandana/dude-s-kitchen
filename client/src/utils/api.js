@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const LOGO_URL = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/v1779692588/dudes-kitchen/logos/logo.png';
+
 const api = axios.create({
   baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
   timeout: 10000,

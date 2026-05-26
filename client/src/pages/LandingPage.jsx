@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import { getLogo } from '../utils/api';
+import { LOGO_URL } from '../utils/api';
 
 const floatingFoods = [
   { emoji: '🍔', className: 'top-[10%] left-[8%] animate-float text-6xl md:text-7xl opacity-20 rotate-12' },
@@ -32,9 +32,6 @@ const glowSpots = [
 
 export default function LandingPage({ onEnter }) {
   const containerRef = useRef(null);
-  const [logoUrl, setLogoUrl] = useState(null);
-
-  useEffect(() => { getLogo().then((d) => { if (d.url) setLogoUrl(d.url); }).catch(() => {}); }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -102,18 +99,12 @@ export default function LandingPage({ onEnter }) {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mb-5"
         >
-          {logoUrl ? (
-            <img
-              src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
-              alt="DUDE'S KITCHEN"
-              className="w-28 h-28 object-cover rounded-2xl mx-auto"
-              fetchpriority="high"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-lg font-extrabold text-black shadow-lg shadow-[#FFD700]/20 mx-auto">
-              DK
-            </div>
-          )}
+          <img
+            src={LOGO_URL}
+            alt="DUDE'S KITCHEN"
+            className="w-28 h-28 object-cover rounded-2xl mx-auto"
+            fetchpriority="high"
+          />
         </motion.div>
         <motion.span
           initial={{ opacity: 0, y: -10 }}

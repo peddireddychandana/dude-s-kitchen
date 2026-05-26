@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { LOGO_URL } from '../utils/api';
 import {
   MapPin,
   Phone,
@@ -147,7 +148,7 @@ const writeReviewUrl = 'https://www.google.com/search?newwindow=1&sca_esv=68cd59
 
 const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=';
 
-export default function ProfilePage({ onBack, logoUrl }) {
+export default function ProfilePage({ onBack }) {
   return (
     <div className="relative min-h-screen bg-[#0A0A0A] pb-28 overflow-hidden">
       <Particles />
@@ -177,18 +178,12 @@ export default function ProfilePage({ onBack, logoUrl }) {
             transition={{ type: 'spring', delay: 0.1 }}
             className="w-20 h-20 mx-auto mb-4"
           >
-            {logoUrl ? (
-              <img
-                src={imgUrl(logoUrl)}
-                alt="DUDE'S KITCHEN"
-                className="w-full h-full object-cover rounded-full shadow-xl shadow-[#FFD700]/20"
-                fetchpriority="high"
-              />
-            ) : (
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-[#FFD700] to-[#E6B800] shadow-xl shadow-[#FFD700]/20 flex items-center justify-center">
-                <ChefHat className="w-10 h-10 text-black" />
-              </div>
-            )}
+            <img
+              src={LOGO_URL}
+              alt="DUDE'S KITCHEN"
+              className="w-full h-full object-cover rounded-full shadow-xl shadow-[#FFD700]/20"
+              fetchpriority="high"
+            />
           </motion.div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
             DUDE'S KITCHEN

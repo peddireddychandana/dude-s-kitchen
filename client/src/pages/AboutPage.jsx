@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, UtensilsCrossed, Star, Heart, Award, Quote } from 'lucide-react';
+import { LOGO_URL } from '../utils/api';
 
 const stats = [
   { icon: <UtensilsCrossed className="w-5 h-5 text-[#FFD700]" />, value: '50+', label: 'Dishes' },
@@ -16,7 +17,7 @@ const milestones = [
   { year: '2024', title: 'Award Winning', desc: 'Named "Best Premium Fast Food Chain" by Food Critics Association.' },
 ];
 
-export default function AboutPage({ onBack, logoUrl }) {
+export default function AboutPage({ onBack }) {
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24">
       <div className="relative h-56 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 overflow-hidden">
@@ -67,13 +68,7 @@ export default function AboutPage({ onBack, logoUrl }) {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            {logoUrl ? (
-              <img src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" />
-            ) : (
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-black font-bold text-sm">
-              DK
-            </div>
-            )}
+            <img src={LOGO_URL} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" />
             <div>
               <p className="text-sm font-bold text-white">DUDE'S KITCHEN</p>
               <p className="text-xs text-zinc-500">Founder & Chef</p>

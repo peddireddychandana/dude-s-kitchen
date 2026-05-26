@@ -9,7 +9,7 @@ import OffersPage from './OffersPage';
 import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
 import ProfilePage from './ProfilePage';
-import { getCategories, getFoods, getLogo } from '../utils/api';
+import { getCategories, getFoods, LOGO_URL } from '../utils/api';
 import { Search, X } from 'lucide-react';
 
 const categoryGradients = {
@@ -63,15 +63,7 @@ export default function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
-  const [logoUrl, setLogoUrl] = useState(null);
   const [selectedFood, setSelectedFood] = useState(null);
-
-  const fetchLogo = useCallback(async () => {
-    try {
-      const d = await getLogo();
-      if (d.url) setLogoUrl(d.url);
-    } catch {}
-  }, []);
 
   const loadData = useCallback(async () => {
     try {
@@ -116,18 +108,16 @@ export default function MenuApp() {
 
   useEffect(() => {
     loadData();
-    fetchLogo();
-  }, [loadData, fetchLogo]);
+  }, [loadData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (document.visibilityState === 'visible') {
         loadData();
-        fetchLogo();
       }
     }, 10000);
     return () => clearInterval(interval);
-  }, [loadData, fetchLogo]);
+  }, [loadData]);
 
   useEffect(() => {
     if (showSearch && searchQuery.trim()) {
@@ -175,10 +165,10 @@ export default function MenuApp() {
 
   const renderMainContent = () => {
     const goHome = () => handleTabChange('home');
-    if (activeTab === 'offers') return <OffersPage onBack={goHome} logoUrl={logoUrl} />;
-    if (activeTab === 'about') return <AboutPage onBack={goHome} logoUrl={logoUrl} />;
-    if (activeTab === 'contact') return <ContactPage onBack={goHome} logoUrl={logoUrl} />;
-    if (activeTab === 'profile') return <ProfilePage onBack={goHome} logoUrl={logoUrl} />;
+    if (activeTab === 'offers') return <OffersPage onBack={goHome} />;
+    if (activeTab === 'about') return <AboutPage onBack={goHome} />;
+    if (activeTab === 'contact') return <ContactPage onBack={goHome} />;
+    if (activeTab === 'profile') return <ProfilePage onBack={goHome} />;
 
     return (
       <div className="flex h-full pb-10">
@@ -192,18 +182,12 @@ export default function MenuApp() {
 
         <div className="flex-1 bg-[#0A0A0A] min-h-screen overflow-y-auto no-scrollbar">
           <div className="sticky top-0 z-30 bg-[#0A0A0A] px-4 pt-3 pb-2 flex items-center gap-3 border-b border-white/[0.06]">
-            {logoUrl ? (
-              <img
-                src={logoUrl.startsWith('http') ? logoUrl : `https://dude-s-kitchen-server.onrender.com${logoUrl}`}
-                alt="DUDE'S KITCHEN"
-                className="w-12 h-12 object-cover rounded-xl"
-                fetchpriority="high"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#E6B800] flex items-center justify-center text-xs font-extrabold text-black">
-                DK
-              </div>
-            )}
+            <img
+              src={LOGO_URL}
+              alt="DUDE'S KITCHEN"
+              className="w-12 h-12 object-cover rounded-xl"
+              fetchpriority="high"
+            />
             <span className="text-base font-extrabold tracking-tight">
               <span className="text-[#FFD700]">DUDE'S</span>
               <span className="text-white"> KITCHEN</span>
