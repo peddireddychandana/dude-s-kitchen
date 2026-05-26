@@ -145,7 +145,7 @@ const imgUrl = (path) => {
 
 const writeReviewUrl = 'https://www.google.com/search?newwindow=1&sca_esv=68cd59949303f16d&sxsrf=ANbL-n5p0nXLR1zABZWZuyxuavgk4PLsSg:1779770699943&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwik8ufCktaUAxV5T2wGHc_GFaMQ0bkNegQIOBAF&biw=1536&h=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
 
-const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=0x3bb3874e280761b5:0x55b436dd349de9ec,3,,,,';
+const readAllReviewsUrl = 'https://www.google.com/search?sca_esv=853093b83e557101&sxsrf=ANbL-n7g0BTHnv-lV4JmfHaf8uRMl542cA:1779725618732&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQNyKULduFnOuoYf7Vn-FzbDKicCsovO-CUY_OG-OnOR8Ppq6zZ7Qx92K9jpXQV2AW_B6Ti5DyvDkPJ9LSNEOJIdl1eo&q=DUDE%27S+KITCHEN+Reviews&sa=X&ved=2ahUKEwiTkbXK6tSUAxWNxjgGHSiCKu4Q0bkNegQIOxAF&biw=1536&bih=694&dpr=1.25#lrd=';
 
 export default function ProfilePage({ onBack, logoUrl }) {
   return (
@@ -196,11 +196,7 @@ export default function ProfilePage({ onBack, logoUrl }) {
           <p className="text-sm text-zinc-400 mt-1 italic font-light">
             "Think Food, Think Us"
           </p>
-          <div className="flex items-center justify-center gap-1.5 mt-3">
-            <Star className="w-4 h-4 fill-[#FFD700] text-[#FFD700]" />
-            <span className="text-sm font-bold text-white">5.0</span>
-            <span className="text-xs text-zinc-500">• Google Reviews</span>
-          </div>
+
           <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-400">
             Food Court
           </span>
