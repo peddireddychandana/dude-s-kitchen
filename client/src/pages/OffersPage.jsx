@@ -118,15 +118,6 @@ export default function OffersPage({ onBack }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-block px-4 py-1.5 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/20 text-xs font-bold text-[#FFD700] mb-5"
-            >
-              {offers.length > 0 ? `UP TO ${Math.max(...offers.map(o => Number(o.discount) || 0))}% OFF` : 'EXCLUSIVE DEALS'}
-            </motion.span>
-
             <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
               Special Offers at{' '}
               <span className="text-[#FFD700]">DUDE'S</span>
@@ -197,13 +188,6 @@ export default function OffersPage({ onBack }) {
                           <Percent className="w-12 h-12 text-white/20" />
                         </div>
                       )}
-
-                      <div className="absolute top-2 right-2">
-                        <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${badge.bg} border ${badge.border} backdrop-blur-sm`}>
-                          <span className="text-[10px]">{badge.icon}</span>
-                          <span className={`text-[8px] font-bold ${badge.text} uppercase tracking-wider`}>{badge.label}</span>
-                        </div>
-                      </div>
 
                       {badge.day && (
                         <div className="absolute top-2 left-2 z-10">
