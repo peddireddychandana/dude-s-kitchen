@@ -296,7 +296,7 @@ export default function OfferManagement() {
                 <span className="text-sm text-zinc-400">
                   {uploading ? 'Uploading...' : form.banner ? 'Change Banner' : 'Upload Banner'}
                 </span>
-                <input type="file" accept="image/*" onChange={handleBannerUpload} className="hidden" disabled={uploading} />
+                <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" capture="environment" onChange={handleBannerUpload} className="hidden" disabled={uploading} />
               </label>
               {form.banner && (
                 <div className="mt-2 rounded-lg overflow-hidden h-24 border border-zinc-700">

@@ -404,7 +404,8 @@ export default function MenuManagement() {
                   </span>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    capture="environment"
                     onChange={handleImageUpload}
                     className="hidden"
                     disabled={uploading}
