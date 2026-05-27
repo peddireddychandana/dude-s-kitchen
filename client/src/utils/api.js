@@ -12,6 +12,39 @@ const api = axios.create({
   },
 });
 
+let dataCache = null;
+let cachePromise = null;
+
+export function prefetchData() {
+  if (cachePromise) return cachePromise;
+  cachePromise = (async () => {
+    try {
+      const [categories, foods] = await Promise.all([getCategories(), getFoods()]);
+      const result = { categories, foods: foods.filter((f) => f.available !== false) };
+      dataCache = result;
+      try {
+        sessionStorage.setItem('menuCache', JSON.stringify(result));
+      } catch {}
+      return result;
+    } catch {
+      return null;
+    }
+  })();
+  return cachePromise;
+}
+
+export function getCachedData() {
+  if (dataCache) return dataCache;
+  try {
+    const stored = sessionStorage.getItem('menuCache');
+    if (stored) {
+      dataCache = JSON.parse(stored);
+      return dataCache;
+    }
+  } catch {}
+  return null;
+}
+
 export const getFoods = async (category) => {
   const params = category ? { category } : {};
   const response = await api.get('/foods', { params });

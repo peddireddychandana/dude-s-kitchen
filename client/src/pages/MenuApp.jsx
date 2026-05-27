@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CategorySidebar from '../components/CategorySidebar';
 import FoodCard from '../components/FoodCard';
 import FoodDetailModal from '../components/FoodDetailModal';
 import BottomNav from '../components/BottomNav';
-import { getCategories, getFoods, LOGO_URL } from '../utils/api';
+import { getCategories, getFoods, getCachedData, LOGO_URL } from '../utils/api';
 import socket from '../utils/socket';
 import { Search, X } from 'lucide-react';
 
@@ -28,29 +28,15 @@ const categoryGradients = {
 };
 
 const categoryEmojis = {
-  'Fried Chicken': '🍗',
-  Burgers: '🍔',
-  Pizza: '🍕',
-  Wraps: '🌮',
-  Hotdogs: '🌭',
-  Sandwiches: '🥪',
-  Mojitos: '🍹',
-  Milkshakes: '🥤',
-  'Quick Bites': '🍟',
-  "DUDE'S KITCHEN SPECIAL": '🔥',
-  default: '🍽️',
+  'Fried Chicken': '🍗', Burgers: '🍔', Pizza: '🍕', Wraps: '🌮',
+  Hotdogs: '🌭', Sandwiches: '🥪', Mojitos: '🍹', Milkshakes: '🥤',
+  'Quick Bites': '🍟', "DUDE'S KITCHEN SPECIAL": '🔥', default: '🍽️',
 };
 
 const categoryNames = {
-  'Fried Chicken': 'Fried\nChicken',
-  Burgers: 'Burgers',
-  Pizza: 'Pizza',
-  Wraps: 'Wraps',
-  Hotdogs: 'Hotdogs',
-  Sandwiches: 'Sand-\nwiches',
-  Mojitos: 'Mojitos',
-  Milkshakes: 'Milk-\nshakes',
-  'Quick Bites': 'Quick\nBites',
+  'Fried Chicken': 'Fried\nChicken', Burgers: 'Burgers', Pizza: 'Pizza',
+  Wraps: 'Wraps', Hotdogs: 'Hotdogs', Sandwiches: 'Sand-\nwiches',
+  Mojitos: 'Mojitos', Milkshakes: 'Milk-\nshakes', 'Quick Bites': 'Quick\nBites',
   "DUDE'S KITCHEN SPECIAL": 'Specials',
 };
 
@@ -62,11 +48,6 @@ const fallbackCategories = [
 ];
 
 const fallbackNames = ['Fried Chicken','Burgers','Pizza','Wraps','Hotdogs','Sandwiches','Mojitos','Milkshakes','Quick Bites',"DUDE'S KITCHEN SPECIAL"];
-
-const sectionVariants = {
-  enter: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -20 },
-};
 
 function SearchBar({ searchQuery, setSearchQuery, onClose }) {
   return (
@@ -93,15 +74,24 @@ function SearchBar({ searchQuery, setSearchQuery, onClose }) {
 
 const MemoSearchBar = React.memo(SearchBar);
 
-const FoodSectionFallback = () => (
-  <div className="flex flex-col gap-4 px-4">
-    {[1, 2, 3].map((i) => (
-      <div key={i} className="skeleton-pulse rounded-2xl" style={{ height: 112 }} />
-    ))}
-  </div>
-);
+function FoodSkeleton() {
+  return (
+    <div className="flex flex-col gap-3 pb-4 px-4">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="flex items-center p-2.5 gap-2.5">
+          <div className="w-[72px] h-[72px] md:w-24 md:h-24 rounded-xl skeleton-pulse flex-shrink-0" />
+          <div className="flex-1 space-y-2">
+            <div className="h-4 w-3/4 skeleton-pulse rounded" />
+            <div className="h-3 w-1/2 skeleton-pulse rounded" />
+            <div className="h-4 w-1/4 skeleton-pulse rounded" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-function FoodListSection({ foods, activeCategory, showSearch, categoryGradients, categoryEmojis, onView }) {
+function FoodListSection({ foods, activeCategory, showSearch, onView }) {
   if (showSearch) {
     return (
       <div className="flex flex-col gap-3 pb-4">
@@ -125,8 +115,7 @@ function FoodListSection({ foods, activeCategory, showSearch, categoryGradients,
           <div className="h-8 w-1 rounded-full bg-gradient-to-b from-[#FFD700] to-red-500" />
           <div>
             <h2 className="text-sm font-extrabold text-[#FFD700] tracking-tight flex items-center gap-2">
-              🔥 DUDE'S KITCHEN
-              <span className="text-white"> SPECIAL</span>
+              🔥 DUDE'S KITCHEN <span className="text-white"> SPECIAL</span>
             </h2>
             <p className="text-[10px] text-zinc-500 mt-0.5">Premium signature selections</p>
           </div>
@@ -171,11 +160,19 @@ function PageFallback() {
 }
 
 export default function MenuApp() {
-  const [categories, setCategories] = useState([]);
-  const [foods, setFoods] = useState([]);
+  const cached = getCachedData();
+  const [categories, setCategories] = useState(cached?.categories || []);
+  const [foods, setFoods] = useState(cached?.foods || []);
   const [filteredFoods, setFilteredFoods] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(() => localStorage.getItem('activeCategory') || '');
-  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState(() => {
+    if (cached?.categories?.length > 0) {
+      const saved = localStorage.getItem('activeCategory');
+      if (saved && cached.categories.some((c) => c.name === saved)) return saved;
+      return cached.categories[0].name;
+    }
+    return localStorage.getItem('activeCategory') || '';
+  });
+  const [loading, setLoading] = useState(!cached);
   const [activeTab, setActiveTab] = useState(() => sessionStorage.getItem('activeTab') || 'home');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -188,19 +185,16 @@ export default function MenuApp() {
       setFoods(foodsData.filter((f) => f.available !== false));
       if (cats.length > 0) {
         const saved = localStorage.getItem('activeCategory');
-        if (saved && cats.some((c) => c.name === saved)) {
-          setActiveCategory(saved);
-        } else {
-          setActiveCategory(cats[0].name);
-        }
+        setActiveCategory((prev) => {
+          if (saved && cats.some((c) => c.name === saved)) return saved;
+          return prev || cats[0].name;
+        });
       }
     } catch {
-      setCategories(fallbackCategories);
-      const saved = localStorage.getItem('activeCategory');
-      if (saved && fallbackNames.includes(saved)) {
-        setActiveCategory(saved);
-      } else {
-        setActiveCategory('Fried Chicken');
+      if (categories.length === 0) {
+        setCategories(fallbackCategories);
+        const saved = localStorage.getItem('activeCategory');
+        setActiveCategory((prev) => (saved && fallbackNames.includes(saved)) ? saved : (prev || 'Fried Chicken'));
       }
     } finally {
       setLoading(false);
@@ -219,14 +213,15 @@ export default function MenuApp() {
   }, [loadData]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading) {
+      if (cached) setFilteredFoods(cached.foods.filter((f) => f.category === activeCategory));
+      return;
+    }
     let result;
     if (showSearch && searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       result = foods.filter(
-        (food) =>
-          food.name?.toLowerCase().includes(query) ||
-          food.description?.toLowerCase().includes(query)
+        (food) => food.name?.toLowerCase().includes(query) || food.description?.toLowerCase().includes(query)
       );
     } else if (activeCategory) {
       result = foods.filter((food) => food.category === activeCategory);
@@ -234,7 +229,7 @@ export default function MenuApp() {
       result = foods;
     }
     setFilteredFoods(result);
-  }, [activeCategory, foods, searchQuery, showSearch, loading]);
+  }, [activeCategory, foods, searchQuery, showSearch, loading, cached]);
 
   const handleCategoryChange = useCallback((category) => {
     localStorage.setItem('activeCategory', category);
@@ -255,7 +250,6 @@ export default function MenuApp() {
   }, []);
 
   const handleCloseSearch = useCallback(() => setSearchQuery(''), []);
-
   const handleSelectFood = useCallback((food) => setSelectedFood(food), []);
   const handleCloseModal = useCallback(() => setSelectedFood(null), []);
 
@@ -279,45 +273,30 @@ export default function MenuApp() {
 
         <div className="flex-1 bg-[#0A0A0A] min-h-screen overflow-y-auto no-scrollbar">
           <div className="sticky top-0 z-30 bg-[#0A0A0A] px-4 pt-3 pb-2 flex items-center gap-3 border-b border-white/[0.06]">
-            <img
-              src={LOGO_URL}
-              alt="DUDE'S KITCHEN"
-              className="w-12 h-12 object-cover rounded-xl"
-              fetchpriority="high"
-              decoding="async"
-            />
+            <img src={LOGO_URL} alt="DUDE'S KITCHEN" className="w-12 h-12 object-cover rounded-xl" fetchpriority="high" decoding="async" />
             <span className="text-base font-extrabold tracking-tight">
               <span className="text-[#FFD700]">DUDE'S</span>
               <span className="text-white"> KITCHEN</span>
             </span>
           </div>
-          {showSearch && (
-            <MemoSearchBar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              onClose={handleCloseSearch}
-            />
-          )}
+          {showSearch && <MemoSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onClose={handleCloseSearch} />}
 
           <div className="px-4 pb-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCategory + (showSearch ? '-search' : '')}
-                variants={sectionVariants}
-                initial="exit"
-                animate="enter"
-                exit="exit"
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
               >
-                {loading ? (
-                  <FoodSectionFallback />
+                {loading && !cached ? (
+                  <FoodSkeleton />
                 ) : (
                   <MemoFoodListSection
                     foods={filteredFoods}
                     activeCategory={activeCategory}
                     showSearch={showSearch}
-                    categoryGradients={categoryGradients}
-                    categoryEmojis={categoryEmojis}
                     onView={handleSelectFood}
                   />
                 )}
@@ -327,13 +306,13 @@ export default function MenuApp() {
         </div>
       </div>
     );
-  }, [activeTab, categories, activeCategory, handleCategoryChange, showSearch, searchQuery, handleCloseSearch, loading, filteredFoods, handleSelectFood, handleTabChange]);
+  }, [activeTab, categories, activeCategory, handleCategoryChange, showSearch, searchQuery, handleCloseSearch, loading, cached, filteredFoods, handleSelectFood, handleTabChange]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.15 }}
       className="relative w-full min-h-screen bg-[#0A0A0A]"
     >
       {renderMainContent()}
