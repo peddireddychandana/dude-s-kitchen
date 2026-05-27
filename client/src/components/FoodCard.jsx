@@ -1,33 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Eye } from 'lucide-react';
+import OptimizedImage, { imgUrl } from './OptimizedImage';
 
-export default function FoodCard({ food, gradient, emoji, onView }) {
+const imgUrlLocal = (path) => {
+  if (!path) return null;
+  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
+  if (url.includes('res.cloudinary.com')) {
+    return url.replace('/upload/', '/upload/q_auto,f_auto,w_800/');
+  }
+  return url;
+};
 
-  const imgUrl = (path) => {
-    if (!path) return null;
-    const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
-    if (url.includes('res.cloudinary.com')) {
-      return url.replace('/upload/', '/upload/q_auto,f_auto/');
-    }
-    return url;
-  };
-
+function FoodCard({ food, gradient, emoji, onView }) {
   const truncatedDesc = food.description
     ? food.description.length > 60
       ? `${food.description.slice(0, 60)}...`
       : food.description
     : '';
 
-  const imgSrc = imgUrl(food.image);
+  const imgSrc = imgUrlLocal(food.image);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="group relative bg-zinc-900/80 backdrop-blur-sm rounded-2xl border border-white/[0.06] hover:border-[#FFD700]/20 transition-all duration-300 overflow-hidden"
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="group relative bg-zinc-900/80 backdrop-blur-sm rounded-2xl border border-white/[0.06] hover:border-[#FFD700]/20 transition-colors duration-300 overflow-hidden gpu"
     >
       <div className="flex items-center p-2.5 gap-2.5">
         {imgSrc ? (
@@ -39,7 +38,13 @@ export default function FoodCard({ food, gradient, emoji, onView }) {
                 </span>
               </div>
             )}
-            <img src={imgSrc} alt={food.name} className="w-full h-full object-cover"  />
+            <OptimizedImage
+              src={food.image}
+              alt={food.name}
+              className="w-full h-full"
+              width={96}
+              height={96}
+            />
             {food.veg !== undefined && (
               <div className="absolute top-1 left-1">
                 {food.veg ? (
@@ -97,3 +102,5 @@ export default function FoodCard({ food, gradient, emoji, onView }) {
     </motion.div>
   );
 }
+
+export default React.memo(FoodCard);

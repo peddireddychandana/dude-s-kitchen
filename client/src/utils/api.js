@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-export const LOGO_URL = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/v1779692588/dudes-kitchen/logos/logo.png';
+export const LOGO_URL = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_400/v1779692588/dudes-kitchen/logos/logo.png';
+export const LOGO_URL_MD = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_200/v1779692588/dudes-kitchen/logos/logo.png';
+export const LOGO_URL_SM = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_96/v1779692588/dudes-kitchen/logos/logo.png';
 
 const api = axios.create({
   baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
-  timeout: 10000,
+  timeout: 8000,
   headers: {
     'Content-Type': 'application/json',
   },

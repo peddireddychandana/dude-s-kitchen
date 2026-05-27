@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Sparkles, Gift, Clock, Percent } from 'lucide-react';
+import OptimizedImage, { imgUrl } from './OptimizedImage';
 
 const offerIcons = {
   default: <Sparkles className="w-6 h-6 text-[#FFD700]" />,
@@ -8,33 +9,36 @@ const offerIcons = {
   limited: <Clock className="w-6 h-6 text-[#FFD700]" />,
 };
 
-const imgUrl = (path) => {
-  if (!path) return null;
-  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
-  if (url.includes('res.cloudinary.com')) {
-    return url.replace('/upload/', '/upload/q_auto,f_auto/');
-  }
-  return url;
+const overlayVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};
+
+const modalVariants = {
+  initial: { opacity: 0, scale: 0.95, y: 20 },
+  animate: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', damping: 25, stiffness: 300, mass: 0.8 } },
+  exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.15 } },
 };
 
 export default function OfferDetailModal({ offer, onClose }) {
-  const imgSrc = imgUrl(offer.banner);
+  const imgSrc = offer.banner ? imgUrl(offer.banner) : null;
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      variants={overlayVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
       onClick={onClose}
     >
       <motion.div
         key={offer._id}
-        initial={{ opacity: 0, scale: 0.9, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 30 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 260 }}
+        variants={modalVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
         className="relative w-full max-w-md bg-zinc-900 rounded-3xl overflow-hidden border border-white/[0.06] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -48,11 +52,11 @@ export default function OfferDetailModal({ offer, onClose }) {
         <div className="relative h-64 md:h-72 bg-zinc-800 overflow-hidden">
           {imgSrc ? (
             <>
-              <img
-                src={imgSrc}
+              <OptimizedImage
+                src={offer.banner}
                 alt={offer.title}
-                className="w-full h-full object-cover"
-                
+                className="w-full h-full"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
             </>

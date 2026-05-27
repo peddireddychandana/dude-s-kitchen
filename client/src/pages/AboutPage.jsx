@@ -17,12 +17,17 @@ const milestones = [
   { year: '2024', title: 'Award Winning', desc: 'Named "Best Premium Fast Food Chain" by Food Critics Association.' },
 ];
 
+const containerVariants = {
+  initial: { opacity: 0, y: 15 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
 export default function AboutPage({ onBack }) {
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24">
       <div className="relative h-56 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 overflow-hidden">
         <motion.button
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={onBack}
           className="absolute top-6 left-4 z-20 w-9 h-9 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all"
@@ -30,21 +35,19 @@ export default function AboutPage({ onBack }) {
           <ArrowLeft className="w-4 h-4 text-white" />
         </motion.button>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,215,0,0.1)_0%,_transparent_70%)]" />
-        <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#FFD700]/5 blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-[#FFD700]/5 blur-3xl" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-display font-bold text-white"
           >
             Our <span className="text-[#FFD700]">Story</span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="text-sm text-zinc-400 mt-2 max-w-md"
           >
             Crafting flavors that bring people together since 2019
@@ -54,21 +57,21 @@ export default function AboutPage({ onBack }) {
 
       <div className="px-4 -mt-8 relative z-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
           className="bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 border border-white/[0.06] mb-6"
         >
           <div className="flex items-start gap-3 mb-4">
             <Quote className="w-6 h-6 text-[#FFD700] flex-shrink-0 mt-1" />
-              <p className="text-sm text-zinc-400 leading-relaxed italic">
+            <p className="text-sm text-zinc-400 leading-relaxed italic">
               At DUDE'S KITCHEN, we believe every meal should be an experience. 
               From our signature fried chicken to our handcrafted burgers, 
               every dish is made with passion, premium ingredients, and a dash of love.
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <img src={LOGO_URL} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" />
+            <img src={LOGO_URL} alt="" className="w-14 h-14 rounded-full object-cover bg-zinc-900" fetchpriority="high" />
             <div>
               <p className="text-sm font-bold text-white">DUDE'S KITCHEN</p>
               <p className="text-xs text-zinc-500">Founder & Chef</p>
@@ -80,9 +83,9 @@ export default function AboutPage({ onBack }) {
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
               className="bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-4 border border-white/[0.06] flex flex-col items-center text-center"
             >
               <div className="w-10 h-10 rounded-xl bg-[#FFD700]/10 flex items-center justify-center mb-2">
@@ -95,9 +98,9 @@ export default function AboutPage({ onBack }) {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="mb-6"
         >
           <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-[0.15em] mb-3">
@@ -109,9 +112,9 @@ export default function AboutPage({ onBack }) {
               {milestones.map((m, i) => (
                 <motion.div
                   key={m.year}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 + i * 0.1 }}
+                  transition={{ delay: 0.25 + i * 0.05, duration: 0.3 }}
                   className="relative pl-12"
                 >
                   <div className="absolute left-[12px] top-1.5 w-4 h-4 rounded-full bg-[#FFD700] border-2 border-zinc-900 shadow-sm" />
@@ -129,7 +132,7 @@ export default function AboutPage({ onBack }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}
+          transition={{ duration: 0.4, delay: 0.35 }}
           className="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-3xl p-6 text-center mb-6"
         >
           <UtensilsCrossed className="w-8 h-8 text-[#FFD700] mx-auto mb-3" />

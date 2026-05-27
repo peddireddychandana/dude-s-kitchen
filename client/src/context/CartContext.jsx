@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
 
 const CartContext = createContext();
 
@@ -33,20 +33,22 @@ export function CartProvider({ children }) {
     );
   }, []);
 
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartCount = useMemo(
+    () => cartItems.reduce((total, item) => total + item.quantity, 0),
+    [cartItems]
+  );
+  const cartTotal = useMemo(
+    () => cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+    [cartItems]
+  );
+
+  const value = useMemo(
+    () => ({ cartItems, cartCount, cartTotal, addToCart, removeFromCart, updateQuantity }),
+    [cartItems, cartCount, cartTotal, addToCart, removeFromCart, updateQuantity]
+  );
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        cartCount,
-        cartTotal,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
