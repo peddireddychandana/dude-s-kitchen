@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CategorySidebar from '../components/CategorySidebar';
 import FoodCard from '../components/FoodCard';
@@ -177,6 +177,7 @@ export default function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [selectedFood, setSelectedFood] = useState(null);
+  const retryRef = useRef(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -190,14 +191,19 @@ export default function MenuApp() {
           return prev || cats[0].name;
         });
       }
+      setLoading(false);
     } catch {
       if (categories.length === 0) {
         setCategories(fallbackCategories);
         const saved = localStorage.getItem('activeCategory');
         setActiveCategory((prev) => (saved && fallbackNames.includes(saved)) ? saved : (prev || 'Fried Chicken'));
       }
-    } finally {
-      setLoading(false);
+      if (!retryRef.current) {
+        retryRef.current = setTimeout(() => {
+          retryRef.current = null;
+          loadData();
+        }, 5000);
+      }
     }
   }, []);
 
@@ -209,6 +215,10 @@ export default function MenuApp() {
     return () => {
       socket.off('foods:update', loadData);
       socket.off('categories:update', loadData);
+      if (retryRef.current) {
+        clearTimeout(retryRef.current);
+        retryRef.current = null;
+      }
     };
   }, [loadData]);
 
