@@ -1,16 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Eye } from 'lucide-react';
-import OptimizedImage, { imgUrl } from './OptimizedImage';
-
-const imgUrlLocal = (path) => {
-  if (!path) return null;
-  const url = path.startsWith('http') ? path : `https://dude-s-kitchen-server.onrender.com${path}`;
-  if (url.includes('res.cloudinary.com')) {
-    return url.replace('/upload/', '/upload/q_auto,f_auto,w_800/');
-  }
-  return url;
-};
+import OptimizedImage from './OptimizedImage';
 
 function FoodCard({ food, gradient, emoji, onView }) {
   const truncatedDesc = food.description
@@ -18,8 +9,6 @@ function FoodCard({ food, gradient, emoji, onView }) {
       ? `${food.description.slice(0, 60)}...`
       : food.description
     : '';
-
-  const imgSrc = imgUrlLocal(food.image);
 
   return (
     <motion.div
@@ -29,7 +18,7 @@ function FoodCard({ food, gradient, emoji, onView }) {
       className="group relative bg-zinc-900/80 backdrop-blur-sm rounded-2xl border border-white/[0.06] hover:border-[#FFD700]/20 transition-colors duration-300 overflow-hidden gpu"
     >
       <div className="flex items-center p-2.5 gap-2.5">
-        {imgSrc ? (
+        {food.image ? (
           <div className="relative w-[72px] h-[72px] md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-white/10">
             {food.category === "DUDE'S KITCHEN SPECIAL" && (
               <div className="absolute top-0 left-0 right-0 z-10">
