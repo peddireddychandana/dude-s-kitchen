@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const imgUrl = (path, cldWidth = 800) => {
   if (!path) return null;
@@ -21,29 +21,6 @@ const imgSrcSet = (path, cldWidth = 800) => {
 
 export default function OptimizedImage({ src, alt, className = '', width, height, style = {}, fetchPriority, onClick }) {
   const [loaded, setLoaded] = useState(false);
-  const [inView, setInView] = useState(false);
-  const imgRef = useRef(null);
-  const isAboveFold = fetchPriority === 'high';
-
-  useEffect(() => {
-    if (isAboveFold) {
-      setInView(true);
-      return;
-    }
-    const el = imgRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '200px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [isAboveFold]);
 
   const cldWidth = width ? width * 2 : 800;
   const resolvedSrc = imgUrl(src, cldWidth);
@@ -51,7 +28,6 @@ export default function OptimizedImage({ src, alt, className = '', width, height
 
   return (
     <div
-      ref={imgRef}
       className={`relative overflow-hidden ${className}`}
       style={{ ...(width ? { width } : {}), ...(height ? { height } : {}), ...style }}
       onClick={onClick}
@@ -59,7 +35,7 @@ export default function OptimizedImage({ src, alt, className = '', width, height
       {!loaded && (
         <div className="absolute inset-0 skeleton-pulse" />
       )}
-      {resolvedSrc && inView && (
+      {resolvedSrc && (
         <img
           src={resolvedSrc}
           srcSet={resolvedSrcSet}
@@ -72,7 +48,7 @@ export default function OptimizedImage({ src, alt, className = '', width, height
           decoding="async"
         />
       )}
-      {resolvedSrc && inView && width && height && (
+      {resolvedSrc && width && height && (
         <div style={{ paddingBottom: `${(height / width) * 100}%` }} />
       )}
     </div>
