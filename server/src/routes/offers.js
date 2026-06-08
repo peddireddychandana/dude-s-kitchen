@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const offers = await Offer.find().sort({ createdAt: -1 });
+    const offers = await Offer.find().select('title discount type expiry image').sort({ createdAt: -1 }).lean();
     res.json(offers);
   } catch (err) {
     res.status(500).json({ message: err.message });

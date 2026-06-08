@@ -36,7 +36,7 @@ export default function LandingPage({ onEnter }) {
       ref={containerRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.4 } }}
-      exit={{ opacity: 0, transition: { duration: 0.15 } }}
+      exit={{ opacity: 0, transition: { duration: 0.08 } }}
       className="relative w-full h-screen overflow-hidden bg-[#0A0A0A] flex flex-col items-center justify-center select-none"
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,215,0,0.08)_0%,_transparent_70%)] pointer-events-none" />

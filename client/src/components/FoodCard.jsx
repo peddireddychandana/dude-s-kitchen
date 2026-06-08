@@ -12,9 +12,9 @@ function FoodCard({ food, gradient, emoji, onView }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.1 }}
       className="group relative bg-zinc-900/80 backdrop-blur-sm rounded-2xl border border-white/[0.06] hover:border-[#FFD700]/20 transition-colors duration-300 overflow-hidden gpu"
     >
       <div className="flex items-center p-2.5 gap-2.5">

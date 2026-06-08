@@ -6,11 +6,30 @@ export const LOGO_URL_SM = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_
 
 const api = axios.create({
   baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
-  timeout: 8000,
+  timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+const cache = {};
+const inflight = {};
+
+function cachedFetch(key, fetcher, ttl = 30000) {
+  if (inflight[key]) return inflight[key];
+  const cached = cache[key];
+  if (cached && Date.now() - cached.ts < ttl) return Promise.resolve(cached.data);
+  inflight[key] = fetcher().then((data) => {
+    cache[key] = { data, ts: Date.now() };
+    delete inflight[key];
+    return data;
+  }).catch((err) => {
+    delete inflight[key];
+    if (cached) return cached.data;
+    throw err;
+  });
+  return inflight[key];
+}
 
 let dataCache = null;
 let cachePromise = null;
@@ -47,18 +66,21 @@ export function getCachedData() {
 
 export const getFoods = async (category) => {
   const params = category ? { category } : {};
-  const response = await api.get('/foods', { params });
-  return response.data;
+  return cachedFetch(`foods:${category || 'all'}`, () =>
+    api.get('/foods', { params }).then((r) => r.data)
+  , 30000);
 };
 
 export const getCategories = async () => {
-  const response = await api.get('/categories');
-  return response.data;
+  return cachedFetch('categories', () =>
+    api.get('/categories').then((r) => r.data)
+  , 30000);
 };
 
 export const getOffers = async () => {
-  const response = await api.get('/offers');
-  return response.data;
+  return cachedFetch('offers', () =>
+    api.get('/offers').then((r) => r.data)
+  , 60000);
 };
 
 export const getLogo = async () => {

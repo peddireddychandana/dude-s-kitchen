@@ -69,10 +69,15 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'), {
   etag: true,
 }));
 
-app.use((req, res, next) => {
+app.use('/uploads', (req, res, next) => {
   res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   next();
 }, express.static(path.join(__dirname, '..', 'uploads'), { maxAge: '30d' }));
+
+app.use('/api', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  next();
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/foods', foodRoutes);

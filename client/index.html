@@ -7,23 +7,21 @@
     <meta name="description" content="DUDE'S KITCHEN — Premium Food Ordering. Experience flavors that tell a story." />
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://dude-s-kitchen-server.onrender.com" />
     <link rel="dns-prefetch" href="https://res.cloudinary.com" />
     <link rel="dns-prefetch" href="https://dude-s-kitchen-server.onrender.com" />
 
-    <link rel="preload" href="https://res.cloudinary.com/dpxv7ogz2/image/upload/v1779692588/dudes-kitchen/logos/logo.png" as="image" fetchpriority="high" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" as="style" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preload" href="https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_400/v1779692588/dudes-kitchen/logos/logo.png" as="image" fetchpriority="high" />
+    <link rel="modulepreload" href="/src/main.jsx" />
 
     <style>
       html { background: #0A0A0A; }
       body { margin: 0; background: #0A0A0A; color: #fff; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
       #root { min-height: 100vh; }
-      @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
-      .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%); background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; border-radius: 8px; }
+      @keyframes skeletonPulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+      .skeleton-pulse { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: skeletonPulse 1.5s ease-in-out infinite; border-radius: 8px; }
     </style>
 
     <title>DUDE'S KITCHEN — Premium Food Ordering</title>
@@ -31,13 +29,13 @@
   <body>
     <div id="root">
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;gap:16px;background:#0A0A0A">
-        <div class="skeleton" style="width:112px;height:112px;border-radius:16px"></div>
-        <div class="skeleton" style="width:140px;height:14px"></div>
-        <div class="skeleton" style="width:200px;height:48px;margin-top:8px"></div>
-        <div class="skeleton" style="width:120px;height:12px"></div>
-        <div class="skeleton" style="width:60px;height:2px"></div>
-        <div class="skeleton" style="width:160px;height:14px"></div>
-        <div class="skeleton" style="width:180px;height:52px;border-radius:999px;margin-top:8px"></div>
+        <div class="skeleton-pulse" style="width:112px;height:112px;border-radius:16px"></div>
+        <div class="skeleton-pulse" style="width:140px;height:14px"></div>
+        <div class="skeleton-pulse" style="width:200px;height:48px;margin-top:8px"></div>
+        <div class="skeleton-pulse" style="width:120px;height:12px"></div>
+        <div class="skeleton-pulse" style="width:60px;height:2px"></div>
+        <div class="skeleton-pulse" style="width:160px;height:14px"></div>
+        <div class="skeleton-pulse" style="width:180px;height:52px;border-radius:999px;margin-top:8px"></div>
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
