@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     if (req.query.category) {
       filter.category = req.query.category;
     }
-    const foods = await Food.find(filter).select('name description price image category veg popular available').sort({ createdAt: -1 }).lean();
+    const foods = await Food.find(filter).sort({ createdAt: -1 }).lean();
     res.json(foods);
   } catch (err) {
     res.status(500).json({ message: err.message });
