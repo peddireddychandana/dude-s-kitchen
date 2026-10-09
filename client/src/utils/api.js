@@ -1,11 +1,11 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
 export const LOGO_URL = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_400/v1779692588/dudes-kitchen/logos/logo.png';
 export const LOGO_URL_MD = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_200/v1779692588/dudes-kitchen/logos/logo.png';
 export const LOGO_URL_SM = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_96/v1779692588/dudes-kitchen/logos/logo.png';
 
 const api = axios.create({
-  baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api',
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
@@ -89,3 +89,11 @@ export const getLogo = async () => {
 };
 
 export default api;
+
+export const analyzeDish = async (menuItemId) => {
+  const res = await api.post('/ai/analyze-dish', { menuItemId });
+  if (!res.data || (!res.data.analysis && !res.data.cached)) {
+    throw new Error('Invalid AI response');
+  }
+  return res.data;
+};

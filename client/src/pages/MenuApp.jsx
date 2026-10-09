@@ -4,7 +4,8 @@ import CategorySidebar from '../components/CategorySidebar';
 import FoodCard from '../components/FoodCard';
 import FoodDetailModal from '../components/FoodDetailModal';
 import BottomNav from '../components/BottomNav';
-import { getCategories, getFoods, getCachedData, LOGO_URL } from '../utils/api';
+import AIAnalysisModal from '../components/AIAnalysisModal';
+import { getCategories, getFoods, getCachedData, LOGO_URL, analyzeDish } from '../utils/api';
 import socket from '../utils/socket';
 import { Search, X } from 'lucide-react';
 
@@ -91,7 +92,7 @@ function FoodSkeleton() {
   );
 }
 
-function FoodListSection({ foods, activeCategory, showSearch, onView }) {
+function FoodListSection({ foods, activeCategory, showSearch, onView, onAnalyze }) {
   if (showSearch) {
     return (
       <div className="flex flex-col gap-3 pb-4">
@@ -102,6 +103,7 @@ function FoodListSection({ foods, activeCategory, showSearch, onView }) {
             gradient={categoryGradients[food.category] || categoryGradients.default}
             emoji={categoryEmojis[food.category] || categoryEmojis.default}
             onView={onView}
+            onAnalyze={onAnalyze}
           />
         ))}
       </div>
@@ -141,6 +143,7 @@ function FoodListSection({ foods, activeCategory, showSearch, onView }) {
               gradient={categoryGradients[food.category] || categoryGradients.default}
               emoji={categoryEmojis[food.category] || categoryEmojis.default}
               onView={onView}
+              onAnalyze={onAnalyze}
             />
           ))}
         </div>
@@ -178,6 +181,12 @@ export default function MenuApp() {
   const [showSearch, setShowSearch] = useState(false);
   const [selectedFood, setSelectedFood] = useState(null);
   const retryRef = useRef(null);
+
+  const [analyzeOpen, setAnalyzeOpen] = useState(false);
+  const [analyzingFood, setAnalyzingFood] = useState(null);
+  const [analysisResult, setAnalysisResult] = useState(null);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisError, setAnalysisError] = useState('');
 
   const loadData = useCallback(async () => {
     try {
@@ -263,6 +272,34 @@ export default function MenuApp() {
   const handleSelectFood = useCallback((food) => setSelectedFood(food), []);
   const handleCloseModal = useCallback(() => setSelectedFood(null), []);
 
+  const handleAnalyze = useCallback(async (food) => {
+    setAnalyzingFood(food);
+    setAnalyzeOpen(true);
+    setAnalysisLoading(true);
+    setAnalysisError('');
+    setAnalysisResult(null);
+    try {
+      const res = await analyzeDish(food._id);
+      setAnalysisResult(res.analysis || null);
+      if (!res.analysis) throw new Error('AI analysis is temporarily unavailable.');
+    } catch (e) {
+      setAnalysisError(e.message || 'Failed to analyze dish.');
+    } finally {
+      setAnalysisLoading(false);
+    }
+  }, []);
+
+  const handleCloseAnalyze = useCallback(() => {
+    setAnalyzeOpen(false);
+    setAnalyzingFood(null);
+    setAnalysisResult(null);
+    setAnalysisError('');
+  }, []);
+
+  const handleRetryAnalyze = useCallback(() => {
+    if (analyzingFood) handleAnalyze(analyzingFood);
+  }, [analyzingFood, handleAnalyze]);
+
   const renderMainContent = useCallback(() => {
     const goHome = () => handleTabChange('home');
 
@@ -308,6 +345,7 @@ export default function MenuApp() {
                     activeCategory={activeCategory}
                     showSearch={showSearch}
                     onView={handleSelectFood}
+                    onAnalyze={handleAnalyze}
                   />
                 )}
               </motion.div>
@@ -316,7 +354,7 @@ export default function MenuApp() {
         </div>
       </div>
     );
-  }, [activeTab, categories, activeCategory, handleCategoryChange, showSearch, searchQuery, handleCloseSearch, loading, cached, filteredFoods, handleSelectFood, handleTabChange]);
+  }, [activeTab, categories, activeCategory, handleCategoryChange, showSearch, searchQuery, handleCloseSearch, loading, cached, filteredFoods, handleSelectFood, handleAnalyze, handleTabChange]);
 
   return (
     <motion.div
@@ -337,6 +375,15 @@ export default function MenuApp() {
           />
         )}
       </AnimatePresence>
+
+      <AIAnalysisModal
+        open={analyzeOpen}
+        onClose={handleCloseAnalyze}
+        analysis={analysisResult}
+        loading={analysisLoading}
+        error={analysisError}
+        onRetry={handleRetryAnalyze}
+      />
 
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </motion.div>

@@ -1,14 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Eye } from 'lucide-react';
+import { Eye, Sparkles } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
-function FoodCard({ food, gradient, emoji, onView }) {
+function FoodCard({ food, gradient, emoji, onView, onAnalyze }) {
   const truncatedDesc = food.description
     ? food.description.length > 60
       ? `${food.description.slice(0, 60)}...`
       : food.description
     : '';
+
+  const gradientClass = gradient || 'from-gray-400 to-gray-500';
 
   return (
     <motion.div
@@ -50,7 +52,7 @@ function FoodCard({ food, gradient, emoji, onView }) {
           </div>
         ) : (
           <div
-            className={`relative w-[72px] h-[72px] md:w-24 md:h-24 rounded-xl bg-gradient-to-br ${gradient || 'from-gray-400 to-gray-500'} flex items-center justify-center flex-shrink-0 shadow-inner`}
+            className={`relative w-[72px] h-[72px] md:w-24 md:h-24 rounded-xl bg-gradient-to-br ${gradientClass} flex items-center justify-center flex-shrink-0 shadow-inner`}
           >
             <span className="text-2xl md:text-4xl">{emoji || '🍽️'}</span>
           </div>
@@ -78,11 +80,23 @@ function FoodCard({ food, gradient, emoji, onView }) {
               </span>
             )}
           </div>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onAnalyze?.(food);
+            }}
+            className="mt-2 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-[9px] md:text-[10px] font-semibold text-purple-200 hover:bg-purple-500/25 active:scale-95 transition-all"
+            title="Analyze with AI"
+          >
+            <Sparkles className="w-2.5 h-2.5 md:w-3 md:h-3" />
+            Analyze with AI
+          </button>
         </div>
 
         <button
           onClick={() => onView?.(food)}
-          className="absolute right-1.5 bottom-1.5 md:right-2.5 md:bottom-2.5 transition-all duration-200 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/20 text-[8px] md:text-[10px] font-bold text-[#FFD700] hover:bg-[#FFD700]/20 flex items-center gap-0.5 md:gap-1"
+          className="absolute right-1.5 top-1.5 md:right-2.5 md:top-2.5 transition-all duration-200 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/20 text-[8px] md:text-[10px] font-bold text-[#FFD700] hover:bg-[#FFD700]/20 flex items-center gap-0.5 md:gap-1"
         >
           <Eye className="w-2 h-2 md:w-2.5 md:h-2.5" />
           View

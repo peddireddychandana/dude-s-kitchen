@@ -1,7 +1,7 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://dude-s-kitchen-server.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api',
 });
 
 api.interceptors.request.use((config) => {
@@ -84,3 +84,7 @@ export function uploadImage(formData) {
 }
 
 export default api;
+
+export function analyzeDish(menuItemId) {
+  return api.post('/ai/analyze-dish', { menuItemId });
+}

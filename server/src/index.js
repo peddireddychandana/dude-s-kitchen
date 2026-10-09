@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -15,6 +15,7 @@ const offerRoutes = require('./routes/offers');
 const galleryRoutes = require('./routes/gallery');
 const uploadRoutes = require('./routes/upload');
 const logoRoutes = require('./routes/logo');
+const aiRoutes = require('./routes/ai');
 
 const Admin = require('./models/Admin');
 
@@ -86,6 +87,7 @@ app.use('/api/offers', offerRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/logo', logoRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'DUDE\'S KITCHEN server is running' });
@@ -111,3 +113,4 @@ mongoose.connect(MONGO_URI)
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
+
