@@ -4,8 +4,13 @@ export const LOGO_URL = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_aut
 export const LOGO_URL_MD = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_200/v1779692588/dudes-kitchen/logos/logo.png';
 export const LOGO_URL_SM = 'https://res.cloudinary.com/dpxv7ogz2/image/upload/q_auto,f_auto,w_96/v1779692588/dudes-kitchen/logos/logo.png';
 
+const API_ORIGIN = (
+  import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api'
+).replace(/\/+$/, '');
+const API_BASE_URL = API_ORIGIN.endsWith('/api') ? API_ORIGIN : `${API_ORIGIN}/api`;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api',
+  baseURL: API_BASE_URL,
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',

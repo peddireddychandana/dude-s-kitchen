@@ -1,7 +1,12 @@
 ﻿import axios from 'axios';
 
+const API_ORIGIN = (
+  import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api'
+).replace(/\/+$/, '');
+const API_BASE_URL = API_ORIGIN.endsWith('/api') ? API_ORIGIN : `${API_ORIGIN}/api`;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://dude-s-kitchen-server.onrender.com/api',
+  baseURL: API_BASE_URL,
 });
 
 api.interceptors.request.use((config) => {
